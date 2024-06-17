@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://oyccr31kv2rw"]
+
+[ext_resource type="Script" path="res://Draggable.gd" id="1_t66wv"]
+[ext_resource type="Texture2D" uid="uid://ccfrgu35dqocs" path="res://icon.svg" id="2_8od4g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_triwc"]
+
+[node name="Draggable" type="Area2D"]
+script = ExtResource("1_t66wv")
+icon_texture = ExtResource("2_8od4g")
+
+[node name="CollisionBounds" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_triwc")
+
+[node name="Icon" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+uv = PackedVector2Array(0, 0, 0, 128, 128, 128, 128, 0)

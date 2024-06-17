@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0m7wa0q18e84"]
+
+[ext_resource type="Script" path="res://Mechanic3.gd" id="1_xffxk"]
+[ext_resource type="Script" path="res://Circle.gd" id="2_4eywo"]
+[ext_resource type="Script" path="res://ball.gd" id="3_6wdqx"]
+
+[node name="Mechanic3" type="Node2D"]
+position = Vector2(400, 300)
+scale = Vector2(1, -1)
+script = ExtResource("1_xffxk")
+
+[node name="Path" type="Node2D" parent="."]
+script = ExtResource("2_4eywo")
+width = 7.0
+color = Color(0.765404, 0.817105, 0.971163, 1)
+
+[node name="Target" type="Node2D" parent="."]
+rotation = -1.35263
+script = ExtResource("2_4eywo")
+width = 10.0
+arc_angle = 2.618
+color = Color(0.49, 0.2401, 0.2401, 1)
+
+[node name="ClickedSpot" type="Node2D" parent="."]
+visible = false
+rotation = -1.35263
+script = ExtResource("2_4eywo")
+width = 10.0
+arc_angle = 0.03
+color = Color(0.886275, 0.239216, 0.239216, 1)
+
+[node name="ShownTimer" type="Timer" parent="ClickedSpot"]
+one_shot = true
+
+[node name="ReleasedSpot" type="Node2D" parent="."]
+visible = false
+rotation = -1.35263
+script = ExtResource("2_4eywo")
+width = 10.0
+arc_angle = 0.03
+color = Color(0.490757, 0.180804, 0.551749, 1)
+
+[node name="ShownTimer" type="Timer" parent="ReleasedSpot"]
+one_shot = true
+
+[node name="Ball" type="Node2D" parent="."]
+position = Vector2(200, 0)
+script = ExtResource("3_6wdqx")
+ball_radius = 20.0
+color = Color(0.47, 0.325083, 0.235, 1)
+
+[node name="Hand" type="Polygon2D" parent="."]
+scale = Vector2(2, 2)
+color = Color(0.874653, 0.807838, 0.656456, 1)
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+
+[node name="Rope" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 200, 0)
+default_color = Color(0.656479, 0.447581, 0.167233, 1)
+
+[connection signal="timeout" from="ClickedSpot/ShownTimer" to="ClickedSpot" method="set_visible" binds= [false]]
+[connection signal="timeout" from="ReleasedSpot/ShownTimer" to="ReleasedSpot" method="set_visible" binds= [false]]

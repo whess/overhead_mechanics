@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg3lsp6wtid8l"]
+
+[ext_resource type="Script" path="res://mechanic2.gd" id="1_27yb1"]
+[ext_resource type="Script" path="res://Circle.gd" id="2_egvkx"]
+[ext_resource type="Script" path="res://ball.gd" id="3_pwfwr"]
+[ext_resource type="Script" path="res://HandAndRope.gd" id="4_r8q02"]
+
+[node name="Mechanic2" type="Node2D"]
+position = Vector2(400, 300)
+script = ExtResource("1_27yb1")
+
+[node name="CirclePath" type="Node2D" parent="."]
+script = ExtResource("2_egvkx")
+
+[node name="Ball" type="Node2D" parent="."]
+script = ExtResource("3_pwfwr")
+
+[node name="CircleFlashTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="HandAndRope" type="Node2D" parent="."]
+script = ExtResource("4_r8q02")
+
+[node name="Hand" type="Polygon2D" parent="HandAndRope"]
+scale = Vector2(2, 2)
+color = Color(0.874653, 0.807838, 0.656456, 1)
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+
+[node name="Rope" type="Line2D" parent="HandAndRope"]
+points = PackedVector2Array(0, 0, 200, 0)
+default_color = Color(0.656479, 0.447581, 0.167233, 1)
+
+[connection signal="timeout" from="CircleFlashTimer" to="." method="_on_circle_flash_timer_timeout"]

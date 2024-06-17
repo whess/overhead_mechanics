@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpr3tk8anuf54"]
+
+[ext_resource type="Script" path="res://mechanic.gd" id="1_f7bee"]
+[ext_resource type="Script" path="res://Circle.gd" id="1_olvqm"]
+
+[node name="Mechanic" type="Node2D"]
+position = Vector2(400, 300)
+script = ExtResource("1_f7bee")
+
+[node name="CirclePath" type="Node2D" parent="."]
+script = ExtResource("1_olvqm")
+color = Color(0.372549, 0.619608, 0.627451, 1)
+
+[node name="Target" type="Node2D" parent="."]
+script = ExtResource("1_olvqm")
+arc_angle = 0.628
+color = Color(0.8536, 0.97, 0.9118, 1)
+
+[node name="Cursor" type="Node2D" parent="."]
+script = ExtResource("1_olvqm")
+arc_angle = 0.05
+color = Color(0.813128, 0.133186, 0.144857, 1)
+
+[node name="CircleFlashTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[connection signal="timeout" from="CircleFlashTimer" to="." method="_on_circle_flash_timer_timeout"]

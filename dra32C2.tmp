@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3m6un4ox4rdl"]
+
+[ext_resource type="Script" path="res://DraggableProto.gd" id="1_jcoar"]
+[ext_resource type="Texture2D" uid="uid://ccfrgu35dqocs" path="res://icon.svg" id="2_pjbvd"]
+[ext_resource type="Script" path="res://DropAreaProto.gd" id="3_mpk71"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2pqs3"]
+size = Vector2(150, 150)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axnjq"]
+size = Vector2(128, 128)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Display" type="Label" parent="."]
+offset_left = 528.0
+offset_top = 16.0
+offset_right = 780.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 40
+text = "example text"
+horizontal_alignment = 2
+
+[node name="DropArea1" type="Area2D" parent="."]
+position = Vector2(96, 504)
+script = ExtResource("3_mpk71")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea1"]
+shape = SubResource("RectangleShape2D_2pqs3")
+
+[node name="Polygon2D" type="Polygon2D" parent="DropArea1"]
+color = Color(1, 0.6, 0.6, 0.282353)
+polygon = PackedVector2Array(-75, -75, 75, -75, 75, 75, -75, 75)
+
+[node name="DropArea2" type="Area2D" parent="."]
+position = Vector2(96, 336)
+script = ExtResource("3_mpk71")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea2"]
+shape = SubResource("RectangleShape2D_2pqs3")
+
+[node name="Polygon2D" type="Polygon2D" parent="DropArea2"]
+color = Color(1, 0.6, 0.6, 0.282353)
+polygon = PackedVector2Array(-75, -75, 75, -75, 75, 75, -75, 75)
+
+[node name="DropArea3" type="Area2D" parent="."]
+position = Vector2(264, 504)
+script = ExtResource("3_mpk71")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DropArea3"]
+shape = SubResource("RectangleShape2D_2pqs3")
+
+[node name="Polygon2D" type="Polygon2D" parent="DropArea3"]
+color = Color(1, 0.6, 0.6, 0.282353)
+polygon = PackedVector2Array(-75, -75, 75, -75, 75, 75, -75, 75)
+
+[node name="Draggable" type="Area2D" parent="."]
+position = Vector2(408, 248)
+script = ExtResource("1_jcoar")
+
+[node name="Icon" type="Sprite2D" parent="Draggable"]
+texture = ExtResource("2_pjbvd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Draggable"]
+shape = SubResource("RectangleShape2D_axnjq")
+
+[connection signal="area_entered" from="DropArea1" to="DropArea1" method="_on_area_entered"]
+[connection signal="area_exited" from="DropArea1" to="DropArea1" method="_on_area_exited"]
+[connection signal="area_entered" from="DropArea2" to="DropArea2" method="_on_area_entered"]
+[connection signal="area_exited" from="DropArea2" to="DropArea2" method="_on_area_exited"]
+[connection signal="area_entered" from="DropArea3" to="DropArea3" method="_on_area_entered"]
+[connection signal="area_exited" from="DropArea3" to="DropArea3" method="_on_area_exited"]
+[connection signal="input_event" from="Draggable" to="Draggable" method="_on_input_event"]
+[connection signal="mouse_entered" from="Draggable" to="Draggable" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Draggable" to="Draggable" method="_on_mouse_exited"]

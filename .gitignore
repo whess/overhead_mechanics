@@ -1,0 +1,14 @@
+# Ignore all bazel-* symlinks.
+/bazel-*
+# Ignore Bazel verbose explanations
+--verbose_explanations
+# Ignore Vim files
+*.swp
+*~
+# Autocomplete / Intellisense
+/compile_commands.json
+/external
+/.cache
+# Godot
+/.godot
+

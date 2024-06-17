@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://bg3lsp6wtid8l"]
+
+[ext_resource type="Script" path="res://mechanic.gd" id="1_f7bee"]
+[ext_resource type="Script" path="res://Circle.gd" id="1_olvqm"]
+[ext_resource type="Script" path="res://ball.gd" id="3_y84gu"]
+[ext_resource type="Script" path="res://HandAndRope.gd" id="4_k2h0u"]
+
+[node name="Mechanic2" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f7bee")
+
+[node name="CirclePath" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_olvqm")
+color = Color(0.313325, 0.512587, 0.635172, 1)
+
+[node name="Ball" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 200.0
+offset_right = 240.0
+offset_bottom = 40.0
+pivot_offset = Vector2(-200, 0)
+script = ExtResource("3_y84gu")
+ball_radius = 30.0
+color = Color(0.662692, 0.408213, 0.157976, 1)
+
+[node name="CircleFlashTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="HandAndRope" type="Node2D" parent="."]
+script = ExtResource("4_k2h0u")
+
+[node name="Hand" type="Polygon2D" parent="HandAndRope"]
+color = Color(0.874653, 0.807838, 0.656456, 1)
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+
+[node name="Rope" type="Line2D" parent="HandAndRope"]
+points = PackedVector2Array(0, 0, 200, 0)
+default_color = Color(0.656479, 0.447581, 0.167233, 1)
+
+[connection signal="timeout" from="CircleFlashTimer" to="." method="_on_circle_flash_timer_timeout"]

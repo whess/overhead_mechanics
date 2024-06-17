@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg3lsp6wtid8l"]
+
+[ext_resource type="Script" path="res://mechanic.gd" id="1_f7bee"]
+[ext_resource type="Script" path="res://Mechanic/Circle.gd" id="1_olvqm"]
+
+[node name="Mechanic" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f7bee")
+
+[node name="CirclePath" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_olvqm")
+color = Color(0.313325, 0.512587, 0.635172, 1)
+
+[node name="Target" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_olvqm")
+color = Color(1, 0.956, 0.94, 1)
+
+[node name="Cursor" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_olvqm")
+arc_angle = 0.063
+color = Color(0.772549, 0.121569, 0, 1)
+
+[node name="CircleFlashTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[connection signal="timeout" from="CircleFlashTimer" to="." method="_on_circle_flash_timer_timeout"]

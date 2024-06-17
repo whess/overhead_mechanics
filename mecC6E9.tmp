@@ -1,0 +1,103 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpm06wsbvnebi"]
+
+[ext_resource type="Script" path="res://Mechanic4.gd" id="1_lxkd3"]
+[ext_resource type="Script" path="res://Circle.gd" id="2_ylikf"]
+[ext_resource type="Texture2D" uid="uid://cldkjahv4ljx8" path="res://leftclick.png" id="3_a3cs0"]
+[ext_resource type="Texture2D" uid="uid://bmuhgmfa5tjf2" path="res://rightclick.png" id="4_h5nej"]
+
+[node name="Mechanic4" type="Node2D"]
+position = Vector2(400, 300)
+script = ExtResource("1_lxkd3")
+
+[node name="Torso" type="Polygon2D" parent="."]
+rotation = -0.221657
+color = Color(0.45089, 0.209283, 0.110249, 1)
+polygon = PackedVector2Array(-85, -25, -85, 25, 85, 25, 85, -25)
+
+[node name="UpperArm" type="Polygon2D" parent="Torso"]
+position = Vector2(76, -3.32207e-06)
+color = Color(0.991721, 0.741517, 0.609773, 1)
+polygon = PackedVector2Array(-8, 8, 72, 8, 72, -8, -8, -8)
+
+[node name="LowerArm" type="Polygon2D" parent="Torso/UpperArm"]
+position = Vector2(64, -2.79753e-06)
+rotation = -6.28319
+color = Color(0.985635, 0.64281, 0.454623, 1)
+polygon = PackedVector2Array(-8, 8, 56, 8, 56, -8, -8, -8)
+
+[node name="Wrist" type="Polygon2D" parent="Torso/UpperArm/LowerArm"]
+position = Vector2(51.8058, -0.980957)
+rotation = 0.00174533
+color = Color(0.84, 0.55608, 0.4032, 1)
+polygon = PackedVector2Array(-4, 4, 24, 4, 24, -4, -4, -4)
+
+[node name="Rope" type="Line2D" parent="Torso/UpperArm/LowerArm/Wrist"]
+position = Vector2(20, -8.74228e-07)
+rotation = 0.10821
+points = PackedVector2Array(0, 0, 56, 0)
+width = 2.0
+default_color = Color(0.250128, 0.17743, 0.0143171, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="Torso/UpperArm/LowerArm/Wrist/Rope"]
+position = Vector2(56, -2.44784e-06)
+color = Color(0.1066, 0.11557, 0.13, 1)
+polygon = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
+
+[node name="FrameId" type="Label" parent="."]
+offset_left = -360.0
+offset_top = -268.0
+offset_right = -320.0
+offset_bottom = -245.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="CurrentTime" type="Label" parent="."]
+offset_left = -368.0
+offset_top = 212.0
+offset_right = -328.0
+offset_bottom = 281.0
+theme_override_font_sizes/font_size = 50
+text = "0"
+
+[node name="Indicator" type="Node2D" parent="."]
+position = Vector2(280, 180)
+
+[node name="Circle" type="Node2D" parent="Indicator"]
+script = ExtResource("2_ylikf")
+radius = 50.0
+width = 10.0
+color = Color(0.6806, 0.82, 0.75727, 1)
+
+[node name="SwingTarget" type="Node2D" parent="Indicator"]
+rotation = 1.5708
+script = ExtResource("2_ylikf")
+radius = 50.0
+width = 10.0
+arc_angle = 0.785398
+color = Color(0.520707, 0.2352, 0.98, 1)
+
+[node name="ThrowTarget" type="Node2D" parent="Indicator"]
+rotation = -1.5708
+script = ExtResource("2_ylikf")
+radius = 50.0
+width = 10.0
+arc_angle = 0.785398
+color = Color(0.821673, 0.108917, 0.390803, 1)
+
+[node name="Cursor" type="Node2D" parent="Indicator"]
+rotation = -1.5708
+script = ExtResource("2_ylikf")
+radius = 50.0
+width = 10.0
+arc_angle = 0.0872665
+color = Color(0.2, 1, 0.24, 1)
+
+[node name="LeftClickIndicator" type="Sprite2D" parent="Indicator"]
+position = Vector2(0, -80)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_a3cs0")
+
+[node name="RightClickIndicator" type="Sprite2D" parent="Indicator"]
+position = Vector2(0, 80)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_h5nej")
