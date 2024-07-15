@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbh6mwn2heafq"]
+
+[ext_resource type="PackedScene" uid="uid://sy5shs1wsgkv" path="res://DropArea.tscn" id="2_gvpbm"]
+[ext_resource type="PackedScene" uid="uid://c1qfbgaylirwd" path="res://item.tscn" id="2_qdm6y"]
+
+[node name="DragTestScene" type="Node2D"]
+
+[node name="Arbitrary" type="Node2D" parent="."]
+position = Vector2(50, 40)
+
+[node name="DropArea1" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
+position = Vector2(110, 360)
+
+[node name="DropArea2" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
+position = Vector2(230, 360)
+
+[node name="DropArea3" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
+position = Vector2(160, 480)
+
+[node name="Item" parent="." instance=ExtResource("2_qdm6y")]
+position = Vector2(670, 160)

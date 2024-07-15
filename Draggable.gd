@@ -2,8 +2,10 @@
 extends Area2D
 class_name Draggable
 
-signal Dragged
-signal Dropped
+signal Dragged(drag_origin)
+signal Dropped(drop_area)
+signal DropRejected(drop_area)
+signal PositionChanged(new_position, relative_change, drag_origin)
 
 # A cursor is hovering over the object
 signal Hovering
@@ -11,7 +13,7 @@ signal StoppedHovering
 
 @export var width:int = 100
 @export var height:int = 100
-@export var icon_texture:Texture2D
+@export var owner_class:Node
 
 enum State {
   STATIONARY,
@@ -19,32 +21,40 @@ enum State {
 }
 
 var state:State = State.STATIONARY
-var click_offset:Vector2
+
+# All coordinates are in global space.
+var drag_origin:Vector2
+var last_drag_position:Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  SetupIcon()
+  #SetupIcon()
   SetCollisionBoundsShape(width, height)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-  pass
 
 func SetCollisionBoundsShape(c_width, c_height):
   $CollisionBounds.shape.size = Vector2(c_width, c_height)
 
-func SetupIcon():
-  $Icon.texture = icon_texture
-  # Set size based on top level params
-  $Icon.polygon[0] = Vector2(-width/2, -height/2)
-  $Icon.polygon[1] = Vector2(-width/2,  height/2)
-  $Icon.polygon[2] = Vector2( width/2,  height/2)
-  $Icon.polygon[3] = Vector2( width/2, -height/2)
-  # But UV is based on pixel size of the texture
-  $Icon.uv[0] = Vector2(0,0)
-  $Icon.uv[1] = Vector2(0,icon_texture.get_height())
-  $Icon.uv[2] = Vector2(icon_texture.get_width(),icon_texture.get_height())
-  $Icon.uv[3] = Vector2(icon_texture.get_width(),0)
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+  if state == State.BEING_DRAGGED:
+    # It's possible that the drag action can be released when the mouse is no
+    # longer hovering over the draggable area. So we want to stop the drag if
+    # the drag action is ever not being held.
+    if not Input.is_action_pressed("primary_action"):
+      state = State.STATIONARY
+      var closest_drop = get_closest_drop_area()
+      if closest_drop != null:
+        if closest_drop.DropInto(self):
+          # If the drop area accepts the item (returns true) then emit Dropped
+          Dropped.emit(closest_drop)
+    else:
+      # Still being dragged. Update signal based on mouse position.
+      var mousepos = get_viewport().get_mouse_position()
+      PositionChanged.emit(mousepos, mousepos - last_drag_position, drag_origin)
+      last_drag_position = mousepos
+
+func SnapTo(new_position):
+  PositionChanged.emit(new_position, new_position - last_drag_position, drag_origin)
 
 # Scans all currently colliding DropAreas and returns the closest one, or null.
 func get_closest_drop_area():
@@ -55,7 +65,8 @@ func get_closest_drop_area():
       continue
     elif closest_area == null:
       closest_area = area
-    elif (position - area.position).length() < (position - closest_area.position).length():
+    elif ((global_position - area.global_position).length()
+        < (global_position - closest_area.global_position).length()):
       closest_area = area
   return closest_area
 
@@ -67,14 +78,7 @@ func _on_mouse_exited():
 
 func _on_input_event(viewport, event, shape_idx):
   if event.is_action_pressed("primary_action"):
-    click_offset = position - get_viewport().get_mouse_position()
+    drag_origin = get_viewport().get_mouse_position()
+    last_drag_position = drag_origin
     state = State.BEING_DRAGGED
-    Dragged.emit()
-  elif event.is_action_released("primary_action"):
-    if state == State.BEING_DRAGGED:
-      state = State.STATIONARY
-      var closest_drop = get_closest_drop_area()
-      Dropped.emit() # TODO provide what we dropped into or null
-      if closest_drop != null:
-        position = closest_drop.position # TODO let the drop area handle changing the position
-        closest_drop.recieve_dropped_item(self)
+    Dragged.emit(drag_origin)

@@ -22,15 +22,17 @@ func _ready():
   # Get information about the sprite used, what the object size is
   SetCollisionBoundsShape(width,height) # TODO
 
+func SetCollisionBoundsShape(c_width, c_height):
+  #$CollisionBounds.shape = RectangleShape2D.new()
+  $CollisionBounds.shape.size = Vector2(c_width, c_height)
+
 func _process(delta):
   # Check if anything is hovering over this area.
   # Emit
 
   pass
 
-func _on_object_dropped_into(object:Draggable):
-  DroppedInto.emit()
+func DropInto(draggable:Draggable):
+  # In theory, check if we want to accept this item or not.
+  return true
 
-func SetCollisionBoundsShape(c_width, c_height):
-  #$CollisionBounds.shape = RectangleShape2D.new()
-  $CollisionBounds.shape.size = Vector2(c_width, c_height)

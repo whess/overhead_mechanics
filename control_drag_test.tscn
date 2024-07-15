@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn14p8l5rbxwl"]
+
+[ext_resource type="Script" path="res://CDrag.gd" id="2_pyoee"]
+
+[node name="CGui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Rect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 710.0
+offset_top = 40.0
+offset_right = 750.0
+offset_bottom = 80.0
+color = Color(0.555959, 0.639786, 0.967255, 1)
+script = ExtResource("2_pyoee")
+
+[node name="Rect2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 40.0
+offset_right = 640.0
+offset_bottom = 80.0
+color = Color(1, 0.479112, 0.447606, 1)
+script = ExtResource("2_pyoee")
+
+[node name="Rect3" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 40.0
+offset_right = 540.0
+offset_bottom = 80.0
+color = Color(0.805462, 0.63119, 0.293346, 1)
+script = ExtResource("2_pyoee")
+
+[node name="Rect4" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 660.0
+offset_top = 150.0
+offset_right = 700.0
+offset_bottom = 190.0
+color = Color(0.156529, 0.75903, 0.690105, 1)
+script = ExtResource("2_pyoee")
+
+[node name="Rect5" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 150.0
+offset_right = 590.0
+offset_bottom = 190.0
+color = Color(0.839756, 0.533228, 0.839845, 1)
+script = ExtResource("2_pyoee")
