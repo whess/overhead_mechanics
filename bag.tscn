@@ -1,0 +1,280 @@
+[gd_scene load_steps=4 format=3 uid="uid://ok5abyyrx8bk"]
+
+[ext_resource type="Script" path="res://Bag.gd" id="1_0mmmp"]
+[ext_resource type="PackedScene" uid="uid://on7om3xvx2wb" path="res://inventory_slot.tscn" id="2_7031p"]
+[ext_resource type="PackedScene" uid="uid://oyccr31kv2rw" path="res://Draggable.tscn" id="3_vdtut"]
+
+[node name="Bag" type="Node2D"]
+script = ExtResource("1_0mmmp")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.68, 0.4777, 0.3332, 1)
+polygon = PackedVector2Array(0, 0, 0, 400, 340, 400, 340, 0)
+
+[node name="Slot" type="Node2D" parent="."]
+position = Vector2(10, 290)
+
+[node name="InventorySlot" parent="Slot" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot2" type="Node2D" parent="."]
+position = Vector2(120, 290)
+
+[node name="InventorySlot" parent="Slot2" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot2"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot2"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot2"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot2"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot2"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot3" type="Node2D" parent="."]
+position = Vector2(230, 290)
+
+[node name="InventorySlot" parent="Slot3" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot3"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot3"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot3"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot3"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot3"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot4" type="Node2D" parent="."]
+position = Vector2(10, 180)
+
+[node name="InventorySlot" parent="Slot4" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot4"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot4"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot4"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot4"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot4"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot5" type="Node2D" parent="."]
+position = Vector2(120, 180)
+
+[node name="InventorySlot" parent="Slot5" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot5"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot5"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot5"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot5"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot5"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot6" type="Node2D" parent="."]
+position = Vector2(230, 180)
+
+[node name="InventorySlot" parent="Slot6" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot6"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot6"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot6"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot6"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot6"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot7" type="Node2D" parent="."]
+position = Vector2(10, 70)
+
+[node name="InventorySlot" parent="Slot7" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot7"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot7"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot7"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot7"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot7"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot8" type="Node2D" parent="."]
+position = Vector2(120, 70)
+
+[node name="InventorySlot" parent="Slot8" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot8"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot8"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot8"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot8"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot8"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Slot9" type="Node2D" parent="."]
+position = Vector2(230, 70)
+
+[node name="InventorySlot" parent="Slot9" instance=ExtResource("2_7031p")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Slot9"]
+color = Color(0.67, 0.470675, 0.3283, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Slot9"]
+color = Color(0.44, 0.3091, 0.2156, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Slot9"]
+position = Vector2(0, 90)
+color = Color(0.79, 0.554975, 0.3871, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Slot9"]
+position = Vector2(0, 90)
+color = Color(0.53, 0.372325, 0.2597, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Slot9"]
+position = Vector2(0, 90)
+color = Color(0.63, 0.442575, 0.3087, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="BagHandle" parent="." instance=ExtResource("3_vdtut")]
+position = Vector2(170, 30)
+width = 340
+height = 60
+
+[connection signal="PositionChanged" from="BagHandle" to="." method="BagDragged"]

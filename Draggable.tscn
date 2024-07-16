@@ -2,14 +2,15 @@
 
 [ext_resource type="Script" path="res://Draggable.gd" id="1_t66wv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_triwc"]
-size = Vector2(100, 100)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qe86y"]
+size = Vector2(1, 1)
 
 [node name="Draggable" type="Area2D"]
 script = ExtResource("1_t66wv")
 
 [node name="CollisionBounds" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_triwc")
+scale = Vector2(100, 100)
+shape = SubResource("RectangleShape2D_qe86y")
 debug_color = Color(0.895679, 0.302272, 0.264744, 0.42)
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

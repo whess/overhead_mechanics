@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://on7om3xvx2wb"]
+
+[ext_resource type="Script" path="res://inventory_slot.gd" id="1_uiwfu"]
+[ext_resource type="PackedScene" uid="uid://sy5shs1wsgkv" path="res://DropArea.tscn" id="2_2wsku"]
+
+[node name="InventorySlot" type="Node2D"]
+script = ExtResource("1_uiwfu")
+normal_color = Color(0, 0.6, 0.701961, 0.419608)
+reject_color = Color(0.91833, 0.253487, 0.342989, 0.419608)
+accept_color = Color(0, 0.65159, 0.0134525, 0.419608)
+
+[node name="DropArea" parent="." instance=ExtResource("2_2wsku")]
+
+[connection signal="DroppedInto" from="DropArea" to="." method="RecieveItem"]
+[connection signal="Hovering" from="DropArea" to="." method="OnHover"]
+[connection signal="StoppedHovering" from="DropArea" to="." method="OnStopHover"]

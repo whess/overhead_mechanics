@@ -1,25 +1,29 @@
-@tool
 extends Area2D
 class_name DropArea
 
 # A draggable object was dropped into this area
-signal DroppedInto
-# A draggable object was pulled out of this area
-signal DraggedOutOf
+signal DroppedInto(draggable:Draggable)
+signal Rejected(draggable:Draggable)
 
-# A draggable object is hovering over this area
-signal Hovering
-signal StoppedHovering
-
-# A draggable object is hovering AND would be the thing dropped into
-signal IsHoverTarget
-signal StoppedHoverTarget
+signal Hovering(draggable:Draggable, accepted:bool)
+signal StoppedHovering(draggable:Draggable, accepted:bool)
+#signal HoverTarget(draggable:Draggable, accepted:bool)
+#signal StoppedHoverTarget
 
 @export var width:int = 100
 @export var height:int = 100
+@export var debug_color:Color = "#0099b36b":
+  set(value):
+    debug_color = value
+    $CollisionBounds.debug_color = value
+
+
+var will_accept:Callable = func(draggable:Draggable): return true
+var current_hover:Draggable = null
 
 func _ready():
-  # Get information about the sprite used, what the object size is
+  #will_accept = func(draggable:Draggable): return true
+
   SetCollisionBoundsShape(width,height) # TODO
 
 func SetCollisionBoundsShape(c_width, c_height):
@@ -27,12 +31,25 @@ func SetCollisionBoundsShape(c_width, c_height):
   $CollisionBounds.shape.size = Vector2(c_width, c_height)
 
 func _process(delta):
-  # Check if anything is hovering over this area.
-  # Emit
-
-  pass
+  if has_overlapping_areas():
+    for area in get_overlapping_areas():
+      if area is Draggable:
+        if current_hover == null:
+          current_hover = area
+          Hovering.emit(area, will_accept.call(area))
+          break
+  elif current_hover != null:
+    StoppedHovering.emit(current_hover, will_accept.call(current_hover))
+    current_hover = null
 
 func DropInto(draggable:Draggable):
+  if current_hover != null:
+    StoppedHovering.emit(current_hover, will_accept.call(current_hover))
+    current_hover = null
   # In theory, check if we want to accept this item or not.
-  return true
-
+  var accepted = will_accept.call(draggable)
+  if accepted:
+    DroppedInto.emit(draggable)
+  else:
+    Rejected.emit(draggable)
+  return accepted

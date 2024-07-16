@@ -11,8 +11,16 @@ signal PositionChanged(new_position, relative_change, drag_origin)
 signal Hovering
 signal StoppedHovering
 
-@export var width:int = 100
-@export var height:int = 100
+@export var width:int = 100:
+  set(value):
+    width = value
+    SetCollisionBoundsShape(width, height)
+    queue_redraw()
+@export var height:int = 100:
+  set(value):
+    height = value
+    SetCollisionBoundsShape(width, height)
+    queue_redraw()
 @export var owner_class:Node
 
 enum State {
@@ -30,9 +38,10 @@ var last_drag_position:Vector2
 func _ready():
   #SetupIcon()
   SetCollisionBoundsShape(width, height)
+  queue_redraw()
 
 func SetCollisionBoundsShape(c_width, c_height):
-  $CollisionBounds.shape.size = Vector2(c_width, c_height)
+  $CollisionBounds.scale = Vector2(c_width, c_height)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

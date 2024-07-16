@@ -1,21 +1,34 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbh6mwn2heafq"]
 
-[ext_resource type="PackedScene" uid="uid://sy5shs1wsgkv" path="res://DropArea.tscn" id="2_gvpbm"]
+[ext_resource type="PackedScene" uid="uid://ok5abyyrx8bk" path="res://bag.tscn" id="2_ep0gv"]
 [ext_resource type="PackedScene" uid="uid://c1qfbgaylirwd" path="res://item.tscn" id="2_qdm6y"]
 
 [node name="DragTestScene" type="Node2D"]
 
-[node name="Arbitrary" type="Node2D" parent="."]
-position = Vector2(50, 40)
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(400, 300)
 
-[node name="DropArea1" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
-position = Vector2(110, 360)
+[node name="ScaleRoot" type="Node2D" parent="."]
+scale = Vector2(0.75, 0.75)
 
-[node name="DropArea2" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
-position = Vector2(230, 360)
+[node name="Bag" parent="ScaleRoot" instance=ExtResource("2_ep0gv")]
+position = Vector2(60, 120)
 
-[node name="DropArea3" parent="Arbitrary" instance=ExtResource("2_gvpbm")]
-position = Vector2(160, 480)
+[node name="Bag2" parent="ScaleRoot" instance=ExtResource("2_ep0gv")]
+position = Vector2(600, 133.333)
 
-[node name="Item" parent="." instance=ExtResource("2_qdm6y")]
-position = Vector2(670, 160)
+[node name="Item" parent="ScaleRoot" instance=ExtResource("2_qdm6y")]
+position = Vector2(493.333, 173.333)
+
+[node name="Item2" parent="ScaleRoot" instance=ExtResource("2_qdm6y")]
+position = Vector2(493.333, 320)
+item_name = "GenericItem2"
+
+[node name="Button" type="Button" parent="ScaleRoot"]
+offset_left = 100.0
+offset_top = 30.0
+offset_right = 230.0
+offset_bottom = 80.0
+text = "print"
+
+[connection signal="pressed" from="ScaleRoot/Button" to="ScaleRoot/Bag" method="PrintAllSlots"]
