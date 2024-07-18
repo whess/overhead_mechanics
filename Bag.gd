@@ -11,6 +11,15 @@ func _ready():
   for i in range(slots.size()):
     inventory_slots[i] = slots[i]
 
+func BagStartDrag(drag_origin):
+  GrabFocus()
+
+func GrabFocus():
+  get_parent().move_child(self, -1)
+  for slot in inventory_slots:
+    if slot.held_item != null:
+      slot.held_item.GrabFocus()
+
 func BagDragged(new_position, relative_change, drag_origin):
   global_position += relative_change
   for slot in inventory_slots:

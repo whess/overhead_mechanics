@@ -277,4 +277,5 @@ position = Vector2(170, 30)
 width = 340
 height = 60
 
+[connection signal="Dragged" from="BagHandle" to="." method="BagStartDrag"]
 [connection signal="PositionChanged" from="BagHandle" to="." method="BagDragged"]

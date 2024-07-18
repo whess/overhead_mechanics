@@ -28,16 +28,23 @@ func OnStopHover(draggable:Draggable, accepted:bool):
   $DropArea.debug_color = normal_color
 
 func RecieveItem(draggable:Draggable):
-  if draggable.owner_class is Item:
-    held_item = draggable.owner_class
-    print("%s recieved item %s" % [get_parent().name, held_item.item_name])
-    held_item.ChangedInventory.connect(ItemRemoved)
+  if not draggable.owner_class is Item:
+    print("InventorySlot recieved something not an Item")
+    return
 
-func ItemRemoved(from:InventorySlot, to:InventorySlot):
-  # TODO item swapping
-  if to != self:
-    held_item.ChangedInventory.disconnect(ItemRemoved)
-    held_item = null
+  var new_item:Item = draggable.owner_class
+  if new_item.current_slot != null:
+    var previous_slot:InventorySlot = new_item.current_slot
+    previous_slot.held_item = held_item
+  held_item = new_item
+
+
+    #held_item.ChangedInventory.connect(ItemRemoved)
+
+#func ItemRemoved(from:InventorySlot, to:InventorySlot):
+  #if to != self:
+    #held_item.ChangedInventory.disconnect(ItemRemoved)
+    #held_item = null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

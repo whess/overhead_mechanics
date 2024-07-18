@@ -42,6 +42,8 @@ func _ready():
 
 func SetCollisionBoundsShape(c_width, c_height):
   $CollisionBounds.scale = Vector2(c_width, c_height)
+  $Control.size = Vector2(c_width, c_height)
+  $Control.position = -(Vector2(c_width, c_height)/2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -85,8 +87,10 @@ func _on_mouse_entered():
 func _on_mouse_exited():
   StoppedHovering.emit()
 
-func _on_input_event(viewport, event, shape_idx):
+func _on_control_gui_input(event):
   if event.is_action_pressed("primary_action"):
+    #TODO: Additionally check if the click would also fall within CollisionBounds
+    $Control.accept_event()
     drag_origin = get_viewport().get_mouse_position()
     last_drag_position = drag_origin
     state = State.BEING_DRAGGED

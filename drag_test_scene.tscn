@@ -15,7 +15,7 @@ scale = Vector2(0.75, 0.75)
 position = Vector2(60, 120)
 
 [node name="Bag2" parent="ScaleRoot" instance=ExtResource("2_ep0gv")]
-position = Vector2(600, 133.333)
+position = Vector2(586.667, 120)
 
 [node name="Item" parent="ScaleRoot" instance=ExtResource("2_qdm6y")]
 position = Vector2(493.333, 173.333)

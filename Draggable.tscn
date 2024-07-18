@@ -13,6 +13,20 @@ scale = Vector2(100, 100)
 shape = SubResource("RectangleShape2D_qe86y")
 debug_color = Color(0.895679, 0.302272, 0.264744, 0.42)
 
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="gui_input" from="Control" to="." method="_on_control_gui_input"]

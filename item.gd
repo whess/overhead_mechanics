@@ -18,18 +18,25 @@ var current_slot:InventorySlot = null
 func StartDrag(drag_origin):
   undragged_position = global_position
   drag_offset = global_position - drag_origin
+  GrabFocus()
+
+func GrabFocus():
+  get_parent().move_child(self, -1)
+
+func DragCancelled():
+  print("Reverting to undragged position")
+  global_position = undragged_position
 
 func DropInto(drop_area:DropArea):
-  if (drop_area == null):
-    global_position = undragged_position
-  else:
-    global_position = drop_area.global_position
-    if drop_area.owner is InventorySlot:
-      ChangedInventory.emit(current_slot, drop_area.owner)
-      var from_name = "null" if current_slot == null else current_slot.get_parent().name
-      print("moved from inventory slot %s" % from_name)
-      current_slot = drop_area.owner
-      print("moved to inventory slot %s" % current_slot.get_parent().name)
+  if drop_area == null \
+      or drop_area.owner == null \
+      or not drop_area.owner is InventorySlot:
+    DragCancelled()
+    return
+
+  global_position = drop_area.global_position
+  ChangedInventory.emit(current_slot, drop_area.owner)
+  current_slot = drop_area.owner
 
 func UpdatePosition(new_position, relative_change, drag_origin):
   #global_position += relative_change # *0.5
