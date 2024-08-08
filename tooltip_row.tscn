@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://7af1mdj2f8ye"]
+
+[node name="Row" type="HBoxContainer"]
+custom_minimum_size = Vector2(125, 0)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Value:"
+
+[node name="Spacer" type="ReferenceRect" parent="."]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+text = "12345"

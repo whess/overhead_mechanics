@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0jsts5383uxe"]
+
+[ext_resource type="StyleBox" uid="uid://b0dgnfxobouk" path="res://box_style.tres" id="1_b3eqo"]
+[ext_resource type="Script" path="res://tooltip.gd" id="2_xhb71"]
+[ext_resource type="PackedScene" uid="uid://7af1mdj2f8ye" path="res://tooltip_row.tscn" id="3_vqmww"]
+
+[node name="Tooltip" type="PanelContainer"]
+offset_right = 137.0
+offset_bottom = 52.0
+theme_override_styles/panel = ExtResource("1_b3eqo")
+script = ExtResource("2_xhb71")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VList" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Row" parent="MarginContainer/VList" instance=ExtResource("3_vqmww")]
+layout_mode = 2
