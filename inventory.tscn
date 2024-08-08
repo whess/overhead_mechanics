@@ -1,0 +1,514 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0ryiwyw5j3tc"]
+
+[ext_resource type="Script" path="res://inventory.gd" id="1_nsc2j"]
+[ext_resource type="PackedScene" uid="uid://on7om3xvx2wb" path="res://inventory_slot.tscn" id="2_soa5f"]
+
+[node name="Inventory" type="Node2D"]
+script = ExtResource("1_nsc2j")
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.496146, 0.527032, 0.614512, 1)
+polygon = PackedVector2Array(0, 0, 0, 340, 380, 340, 380, 0)
+
+[node name="Head" type="Node2D" parent="."]
+position = Vector2(20, 10)
+
+[node name="InventorySlot" parent="Head" instance=ExtResource("2_soa5f")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Head"]
+color = Color(0.498039, 0.52549, 0.615686, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Head"]
+color = Color(0.3159, 0.33319, 0.39, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Head"]
+position = Vector2(0, 90)
+color = Color(0.6156, 0.649293, 0.76, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Head"]
+position = Vector2(0, 90)
+color = Color(0.4212, 0.444253, 0.52, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Head"]
+position = Vector2(0, 90)
+color = Color(0.5427, 0.572403, 0.67, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Label" type="Label" parent="Head"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+text = "Head"
+
+[node name="SkinTempValue" type="Label" parent="Head"]
+z_index = 1
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 91.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(1, 0.874, 0.72, 1)
+text = "22"
+horizontal_alignment = 2
+
+[node name="CoreTempValue" type="Label" parent="Head"]
+z_index = 1
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 91.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(1, 0.42, 0.42, 1)
+text = "36.5"
+horizontal_alignment = 2
+
+[node name="VasoconstrictionValue" type="Label" parent="Head"]
+z_index = 1
+offset_left = 50.0
+offset_right = 91.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.7, 0.182, 0.182, 1)
+text = "0%"
+horizontal_alignment = 2
+
+[node name="SkinWetnessValue" type="Label" parent="Head"]
+z_index = 1
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 51.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
+text = "5%"
+
+[node name="DrippingFlag" type="Label" parent="Head"]
+visible = false
+z_index = 1
+offset_left = 10.0
+offset_right = 30.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.824968, 0.479327, 0.91239, 1)
+text = "Dr"
+
+[node name="SweatingRateValue" type="Label" parent="Head"]
+z_index = 1
+offset_left = 10.0
+offset_top = 50.0
+offset_right = 30.0
+offset_bottom = 73.0
+theme_override_colors/font_color = Color(0.2016, 0.3912, 0.96, 1)
+text = "0.1"
+
+[node name="Torso" type="Node2D" parent="."]
+position = Vector2(130, 120)
+
+[node name="InventorySlot" parent="Torso" instance=ExtResource("2_soa5f")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Torso"]
+color = Color(0.498039, 0.52549, 0.615686, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Torso"]
+color = Color(0.3159, 0.33319, 0.39, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Torso"]
+position = Vector2(0, 90)
+color = Color(0.6156, 0.649293, 0.76, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Torso"]
+position = Vector2(0, 90)
+color = Color(0.4212, 0.444253, 0.52, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Torso"]
+position = Vector2(0, 90)
+color = Color(0.5427, 0.572403, 0.67, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Label" type="Label" parent="Torso"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+text = "Chest"
+
+[node name="SkinTempValue" type="Label" parent="Torso"]
+z_index = 1
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 91.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(1, 0.87451, 0.721569, 1)
+text = "22"
+horizontal_alignment = 2
+
+[node name="SkinWetnessValue" type="Label" parent="Torso"]
+z_index = 1
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 51.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
+text = "5%"
+
+[node name="Arms" type="Node2D" parent="."]
+position = Vector2(20, 120)
+
+[node name="InventorySlot" parent="Arms" instance=ExtResource("2_soa5f")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Arms"]
+color = Color(0.498039, 0.52549, 0.615686, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Arms"]
+color = Color(0.3159, 0.33319, 0.39, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Arms"]
+position = Vector2(0, 90)
+color = Color(0.6156, 0.649293, 0.76, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Arms"]
+position = Vector2(0, 90)
+color = Color(0.4212, 0.444253, 0.52, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Arms"]
+position = Vector2(0, 90)
+color = Color(0.5427, 0.572403, 0.67, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Label" type="Label" parent="Arms"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+text = "Arms"
+
+[node name="SkinTempValue" type="Label" parent="Arms"]
+z_index = 1
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 91.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(1, 0.87451, 0.721569, 1)
+text = "22"
+horizontal_alignment = 2
+
+[node name="SkinWetnessValue" type="Label" parent="Arms"]
+z_index = 1
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 51.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
+text = "5%"
+
+[node name="Legs" type="Node2D" parent="."]
+position = Vector2(20, 230)
+
+[node name="InventorySlot" parent="Legs" instance=ExtResource("2_soa5f")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Legs"]
+color = Color(0.498039, 0.52549, 0.615686, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Legs"]
+color = Color(0.3159, 0.33319, 0.39, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Legs"]
+position = Vector2(0, 90)
+color = Color(0.6156, 0.649293, 0.76, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Legs"]
+position = Vector2(0, 90)
+color = Color(0.4212, 0.444253, 0.52, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Legs"]
+position = Vector2(0, 90)
+color = Color(0.5427, 0.572403, 0.67, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Label" type="Label" parent="Legs"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+text = "Legs"
+
+[node name="SkinTempValue" type="Label" parent="Legs"]
+z_index = 1
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 91.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(1, 0.87451, 0.721569, 1)
+text = "22"
+horizontal_alignment = 2
+
+[node name="SkinWetnessValue" type="Label" parent="Legs"]
+z_index = 1
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 51.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
+text = "5%"
+
+[node name="Feet" type="Node2D" parent="."]
+position = Vector2(130, 230)
+
+[node name="InventorySlot" parent="Feet" instance=ExtResource("2_soa5f")]
+position = Vector2(50, 50)
+
+[node name="Middle" type="Polygon2D" parent="Feet"]
+color = Color(0.498039, 0.52549, 0.615686, 1)
+polygon = PackedVector2Array(10, 10, 10, 90, 90, 90, 90, 10)
+
+[node name="Top" type="Polygon2D" parent="Feet"]
+color = Color(0.3159, 0.33319, 0.39, 1)
+polygon = PackedVector2Array(0, 0, 10, 10, 90, 10, 100, 0)
+
+[node name="Bottom" type="Polygon2D" parent="Feet"]
+position = Vector2(0, 90)
+color = Color(0.6156, 0.649293, 0.76, 1)
+polygon = PackedVector2Array(10, 0, 0, 10, 100, 10, 90, 0)
+
+[node name="Left" type="Polygon2D" parent="Feet"]
+position = Vector2(0, 90)
+color = Color(0.4212, 0.444253, 0.52, 1)
+polygon = PackedVector2Array(10, -80, 0, -90, 0, 10, 10, 0)
+
+[node name="Right" type="Polygon2D" parent="Feet"]
+position = Vector2(0, 90)
+color = Color(0.5427, 0.572403, 0.67, 1)
+polygon = PackedVector2Array(100, -90, 90, -80, 90, 0, 100, 10)
+
+[node name="Label" type="Label" parent="Feet"]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 70.0
+offset_bottom = 53.0
+text = "Feet
+"
+
+[node name="SkinTempValue" type="Label" parent="Feet"]
+z_index = 1
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 91.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(1, 0.87451, 0.721569, 1)
+text = "22"
+horizontal_alignment = 2
+
+[node name="SkinWetnessValue" type="Label" parent="Feet"]
+z_index = 1
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 51.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
+text = "5%"
+
+[node name="Stats" type="Node2D" parent="."]
+position = Vector2(130, 10)
+
+[node name="AirTempLabel" type="Label" parent="Stats"]
+offset_top = 20.0
+offset_right = 89.0
+offset_bottom = 43.0
+text = "Air Temp:"
+
+[node name="CoreTempLabel" type="Label" parent="Stats"]
+offset_right = 89.0
+offset_bottom = 23.0
+text = "Core Temp:"
+
+[node name="CoreTempValue" type="Label" parent="Stats"]
+offset_left = 100.0
+offset_right = 140.0
+offset_bottom = 23.0
+text = "37
+"
+
+[node name="HeadMetabolicRateLabel" type="Label" parent="Stats"]
+offset_left = 270.0
+offset_right = 359.0
+offset_bottom = 23.0
+text = "Metabolic Rate:"
+
+[node name="HeadMetabolicRateValue" type="Label" parent="Stats"]
+offset_left = 440.0
+offset_right = 480.0
+offset_bottom = 23.0
+text = "0"
+
+[node name="SensibleHeatRateLabel" type="Label" parent="Stats"]
+offset_left = 270.0
+offset_top = 20.0
+offset_right = 359.0
+offset_bottom = 43.0
+text = "Sensible Rate:"
+
+[node name="SensibleHeatRateValue" type="Label" parent="Stats"]
+offset_left = 440.0
+offset_top = 20.0
+offset_right = 480.0
+offset_bottom = 43.0
+text = "0"
+
+[node name="SkinEnergyRateLabel" type="Label" parent="Stats"]
+offset_left = 270.0
+offset_top = 40.0
+offset_right = 359.0
+offset_bottom = 63.0
+text = "Skin Energy Rate:"
+
+[node name="SkinEnergyRateValue" type="Label" parent="Stats"]
+offset_left = 440.0
+offset_top = 40.0
+offset_right = 480.0
+offset_bottom = 63.0
+text = "0"
+
+[node name="MassTransferLabel" type="Label" parent="Stats"]
+offset_left = 270.0
+offset_top = 60.0
+offset_right = 359.0
+offset_bottom = 83.0
+text = "Evaporation Rate:"
+
+[node name="MassTransferValue" type="Label" parent="Stats"]
+offset_left = 440.0
+offset_top = 60.0
+offset_right = 480.0
+offset_bottom = 83.0
+text = "0
+"
+
+[node name="AirTempValue" type="Label" parent="Stats"]
+offset_left = 100.0
+offset_top = 20.0
+offset_right = 140.0
+offset_bottom = 43.0
+text = "22"
+
+[node name="WindSpeedabel" type="Label" parent="Stats"]
+offset_top = 40.0
+offset_right = 96.0
+offset_bottom = 63.0
+text = "Wind Speed:"
+
+[node name="WindSpeedValue" type="Label" parent="Stats"]
+offset_left = 100.0
+offset_top = 40.0
+offset_right = 155.0
+offset_bottom = 63.0
+text = "5 km/h"
+
+[node name="HumidityLabel" type="Label" parent="Stats"]
+offset_top = 60.0
+offset_right = 92.0
+offset_bottom = 83.0
+text = "Humidity:"
+
+[node name="MetabolicRateLabel" type="Label" parent="Stats"]
+offset_top = 80.0
+offset_right = 92.0
+offset_bottom = 103.0
+text = "Met Rate:"
+
+[node name="HumidityValue" type="Label" parent="Stats"]
+offset_left = 100.0
+offset_top = 60.0
+offset_right = 155.0
+offset_bottom = 83.0
+text = "20%"
+
+[node name="MetabolicRateValue" type="Label" parent="Stats"]
+offset_left = 100.0
+offset_top = 80.0
+offset_right = 155.0
+offset_bottom = 103.0
+text = "1 met"
+
+[node name="Controls" type="Node2D" parent="."]
+position = Vector2(240, 120)
+
+[node name="AirTempSlider" type="HSlider" parent="Controls"]
+offset_left = 30.0
+offset_right = 130.0
+offset_bottom = 16.0
+min_value = -40.0
+max_value = 80.0
+value = 22.0
+
+[node name="AirTempLabel" type="Label" parent="Controls"]
+offset_left = 1.0
+offset_top = -5.0
+offset_right = 31.0
+offset_bottom = 18.0
+text = "AT"
+
+[node name="WindSpeedSlider" type="HSlider" parent="Controls"]
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 130.0
+offset_bottom = 41.0
+max_value = 10.0
+step = 0.1
+value = 0.1
+
+[node name="WindSpeedLabel" type="Label" parent="Controls"]
+offset_left = 1.0
+offset_top = 20.0
+offset_right = 31.0
+offset_bottom = 43.0
+text = "WS"
+
+[node name="HumiditySlider" type="HSlider" parent="Controls"]
+offset_left = 30.0
+offset_top = 48.0
+offset_right = 130.0
+offset_bottom = 64.0
+value = 20.0
+
+[node name="HumidityLabel" type="Label" parent="Controls"]
+offset_left = 1.0
+offset_top = 43.0
+offset_right = 31.0
+offset_bottom = 66.0
+text = "HU"
+
+[node name="MetabolicRateSlider" type="HSlider" parent="Controls"]
+offset_left = 31.0
+offset_top = 70.0
+offset_right = 131.0
+offset_bottom = 86.0
+max_value = 10.0
+value = 1.0
+
+[node name="MetabolicRateLabel" type="Label" parent="Controls"]
+offset_left = 1.0
+offset_top = 66.0
+offset_right = 31.0
+offset_bottom = 89.0
+text = "Met"
+
+[connection signal="value_changed" from="Controls/AirTempSlider" to="." method="_on_air_temp_slider_value_changed"]
+[connection signal="value_changed" from="Controls/WindSpeedSlider" to="." method="_on_wind_speed_slider_value_changed"]
+[connection signal="value_changed" from="Controls/HumiditySlider" to="." method="_on_humidity_slider_value_changed"]
+[connection signal="value_changed" from="Controls/MetabolicRateSlider" to="." method="_on_metabolic_rate_slider_value_changed"]

@@ -54,10 +54,13 @@ func _process(delta):
     if not Input.is_action_pressed("primary_action"):
       state = State.STATIONARY
       var closest_drop = get_closest_drop_area()
-      if closest_drop != null:
-        if closest_drop.DropInto(self):
-          # If the drop area accepts the item (returns true) then emit Dropped
-          Dropped.emit(closest_drop)
+      if closest_drop == null:
+        Dropped.emit(null)
+      elif closest_drop.DropInto(self):
+        # If the drop area accepts the item (returns true) then emit Dropped
+        Dropped.emit(closest_drop)
+      else:
+        DropRejected.emit(closest_drop)
     else:
       # Still being dragged. Update signal based on mouse position.
       var mousepos = get_viewport().get_mouse_position()
@@ -74,10 +77,13 @@ func get_closest_drop_area():
   for area in drop_areas:
     if not area is DropArea:
       continue
-    elif closest_area == null:
+    # Note: probably want to snap to the closest drop area even if "will_accept" is false
+    if closest_area == null:
       closest_area = area
     elif ((global_position - area.global_position).length()
         < (global_position - closest_area.global_position).length()):
+      # TODO: need to also sort by "focus" potentially? Or have some way for
+      # the owning object to reject picking some drop areas that are being "obscured".
       closest_area = area
   return closest_area
 
