@@ -17,7 +17,6 @@ signal StoppedHovering(draggable:Draggable, accepted:bool)
     debug_color = value
     $CollisionBounds.debug_color = value
 
-
 var will_accept:Callable = func(draggable:Draggable): return true
 var current_hover:Draggable = null
 

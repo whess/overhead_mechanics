@@ -102,6 +102,12 @@ offset_bottom = 73.0
 theme_override_colors/font_color = Color(0.2016, 0.3912, 0.96, 1)
 text = "0.1"
 
+[node name="Control" type="Control" parent="Head"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+
 [node name="Torso" type="Node2D" parent="."]
 position = Vector2(130, 120)
 
@@ -156,6 +162,12 @@ offset_right = 51.0
 offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
 text = "5%"
+
+[node name="Control" type="Control" parent="Torso"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="Arms" type="Node2D" parent="."]
 position = Vector2(20, 120)
@@ -212,6 +224,12 @@ offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
 text = "5%"
 
+[node name="Control" type="Control" parent="Arms"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+
 [node name="Legs" type="Node2D" parent="."]
 position = Vector2(20, 230)
 
@@ -266,6 +284,12 @@ offset_right = 51.0
 offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
 text = "5%"
+
+[node name="Control" type="Control" parent="Legs"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="Feet" type="Node2D" parent="."]
 position = Vector2(130, 230)
@@ -322,6 +346,12 @@ offset_right = 51.0
 offset_bottom = 93.0
 theme_override_colors/font_color = Color(0.7008, 0.86496, 0.96, 1)
 text = "5%"
+
+[node name="Control" type="Control" parent="Feet"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
 
 [node name="Stats" type="Node2D" parent="."]
 position = Vector2(130, 10)

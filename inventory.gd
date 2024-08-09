@@ -1,6 +1,8 @@
 extends Node2D
 class_name Inventory
 
+var tooltip_scene = preload("res://tooltip.tscn")
+
 class BodyPart:
   var skin_temp:float # C
   var core_temp # C
@@ -32,9 +34,39 @@ var legs:BodyPart
 var feet:BodyPart
 
 var whole_body:BodyPart
+var tooltip_node:Tooltip
+var tooltip_bounding_rect:Rect2
+var tooltip_shown = false
+
+var debug_stats = {"head": {}, "torso": {}, "arms": {}, "legs": {}, "feet": {}}
+
+func show_tooltip(part_name:String, bounding_rect:Rect2):
+  if not tooltip_shown:
+    tooltip_bounding_rect = bounding_rect
+    tooltip_shown = true
+    add_child(tooltip_node)
+    var contents:Array[Tooltip.TooltipContents]
+    contents.append(Tooltip.TooltipContents.new("Sensible Rate (watts):", "%.2f" % [debug_stats[part_name]["sensible_heat_rate"]]))
+    contents.append(Tooltip.TooltipContents.new("Evaporation Rate (watts):", "%.2f" % [debug_stats[part_name]["evaporation_watts"]]))
+    tooltip_node.set_contents(contents)
+
+func hide_tooltip():
+  tooltip_shown = false
+  remove_child(tooltip_node)
+
+func connect_tooltip_function(control:Control, debug_index:String):
+  control.mouse_entered.connect(show_tooltip.bind(debug_index, control.get_global_rect()))
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+  tooltip_node = tooltip_scene.instantiate()
+  tooltip_node.owner = self
+  connect_tooltip_function($Head/Control, "head")
+  connect_tooltip_function($Torso/Control, "torso")
+  connect_tooltip_function($Arms/Control, "arms")
+  connect_tooltip_function($Legs/Control, "legs")
+  connect_tooltip_function($Feet/Control, "feet")
+
   # Avg adult male total surface area: 1.85 sq/m
   # var body_surface_area = 1.85
   # var body_total_mass = 70
@@ -197,12 +229,16 @@ func update_body_part(part:BodyPart, delta):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+  if tooltip_shown and not tooltip_bounding_rect.has_point(get_viewport().get_mouse_position()):
+    hide_tooltip()
+
   # Update all body parts
-  var debug_data = update_body_part(head, delta)
-  update_body_part(torso, delta)
-  update_body_part(arms, delta)
-  update_body_part(legs, delta)
-  update_body_part(feet, delta)
+  debug_stats["head"] = update_body_part(head, delta)
+  debug_stats["torso"] = update_body_part(torso, delta)
+  debug_stats["arms"] = update_body_part(arms, delta)
+  debug_stats["legs"] = update_body_part(legs, delta)
+  debug_stats["feet"] = update_body_part(feet, delta)
+  var debug_data = debug_stats["head"]
 
   $Stats/HeadMetabolicRateValue.text = "%f" % [debug_data["part_metabolic_rate"]]
   $Stats/SensibleHeatRateValue.text = "%f" % [debug_data["sensible_heat_rate"]]

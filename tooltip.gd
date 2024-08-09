@@ -1,4 +1,5 @@
 extends PanelContainer
+class_name Tooltip
 
 var tooltip_row_scene = preload("res://tooltip_row.tscn")
 
@@ -31,7 +32,7 @@ func set_contents(contents:Array[TooltipContents]):
 # Called when the node enters the scene tree for the first time.
 func _ready():
   var rows:Array[TooltipContents] = [
-    TooltipContents.new("", "")
+    TooltipContents.new("a", "b")
   ]
   set_contents(rows)
 
