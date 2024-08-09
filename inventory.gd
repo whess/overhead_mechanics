@@ -16,11 +16,14 @@ class BodyPart:
 
 # Environment variables
 var air_temp:float = 22 # C
-var wind_speed:float = 5 # km/h
+var wind_speed:float = 0.1 # km/h
 var humidity:float = 0.2 # % relative
+
+var time_rate = 1.0
 
 # Body total variables
 var body_metabolic_rate = 1.0 # in mets: 58.2 watts/sq meter
+var body_average_core_temp = 37
 
 # Body total constants
 var body_surface_area = 1.85
@@ -40,14 +43,69 @@ var tooltip_shown = false
 
 var debug_stats = {"head": {}, "torso": {}, "arms": {}, "legs": {}, "feet": {}}
 
+func pick_color(value:float, color_dict:Dictionary):
+  var has_above_value = false
+  var above_value:float
+  var above_color:Color
+  var has_below_value = false
+  var below_value:float
+  var below_color:Color
+
+  for pin_value in color_dict:
+    if pin_value > value and (not has_above_value or pin_value < above_value):
+      has_above_value = true
+      above_value = pin_value
+      above_color = color_dict[pin_value]
+    elif pin_value <= value and (not has_below_value or pin_value > below_value):
+      has_below_value = true
+      below_value = pin_value
+      below_color = color_dict[pin_value]
+
+  if has_above_value and has_below_value:
+    var t = (value - below_value) / (above_value - below_value)
+    return below_color.lerp(above_color, t)
+  elif has_above_value:
+    return above_color
+  elif has_below_value:
+    return below_color
+  else:
+    return Color.WHITE
+
+func get_core_temp_color(temp:float):
+  var color_dict = {
+    35.0: Color("#c19df2"),
+    36.1: Color.BISQUE,
+    37.2: Color.BISQUE,
+    40.0: Color("#e36f6f")
+  }
+  return pick_color(temp, color_dict)
+
+func get_skin_temp_color(temp:float):
+  var color_dict = {
+    15.0: Color("#595cff"),
+    30.0: Color("#88e7eb"),
+    32.7: Color.BISQUE,
+    34.3: Color.BISQUE,
+    40.0: Color("#ff7559"),
+    45.0: Color("#ed2424")
+  }
+  return pick_color(temp, color_dict)
+
 func show_tooltip(part_name:String, bounding_rect:Rect2):
-  if not tooltip_shown:
+  if not tooltip_shown and not debug_stats["head"].is_empty():
     tooltip_bounding_rect = bounding_rect
     tooltip_shown = true
     add_child(tooltip_node)
     var contents:Array[Tooltip.TooltipContents]
+    contents.append(Tooltip.TooltipContents.new("Core Temp (C):", "%.2f" % [debug_stats[part_name]["core_temp"]], get_core_temp_color(debug_stats[part_name]["core_temp"])))
+    contents.append(Tooltip.TooltipContents.new("Skin Temp (C):", "%.2f" % [debug_stats[part_name]["skin_temp"]], get_skin_temp_color(debug_stats[part_name]["skin_temp"])))
+    contents.append(Tooltip.TooltipContents.new("Metabolic Rate (watts):", "%.2f" % [debug_stats[part_name]["part_metabolic_rate"]]))
+    contents.append(Tooltip.TooltipContents.new("Core-Skin Rate (watts):", "%.2f" % [debug_stats[part_name]["skin_energy_exchange_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Sensible Rate (watts):", "%.2f" % [debug_stats[part_name]["sensible_heat_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Evaporation Rate (watts):", "%.2f" % [debug_stats[part_name]["evaporation_watts"]]))
+    contents.append(Tooltip.TooltipContents.new("Sweat Rate (g/min):", "%.2f" % [debug_stats[part_name]["sweat_rate"]]))
+    contents.append(Tooltip.TooltipContents.new("Skin blood flow (L/min):", "%.2f" % [debug_stats[part_name]["skin_blood_flow"]]))
+    contents.append(Tooltip.TooltipContents.new("Vasoconstriction (%):", "%.0f" % [debug_stats[part_name]["vasoconstriction"]*100]))
     tooltip_node.set_contents(contents)
 
 func hide_tooltip():
@@ -59,6 +117,11 @@ func connect_tooltip_function(control:Control, debug_index:String):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+  _on_air_temp_slider_value_changed(air_temp)
+  _on_wind_speed_slider_value_changed(wind_speed)
+  _on_humidity_slider_value_changed(humidity*100)
+  _on_metabolic_rate_slider_value_changed(body_metabolic_rate)
+
   tooltip_node = tooltip_scene.instantiate()
   tooltip_node.owner = self
   connect_tooltip_function($Head/Control, "head")
@@ -70,13 +133,14 @@ func _ready():
   # Avg adult male total surface area: 1.85 sq/m
   # var body_surface_area = 1.85
   # var body_total_mass = 70
-  var body_starting_wetness = 0.5
-  var body_starting_core_temp = 36.6
+  var body_starting_wetness = 0.00
+  var body_starting_core_temp = 37
+  var body_starting_skin_temp = 33.5
 
   whole_body = BodyPart.new()
   whole_body.mass = body_total_mass
   whole_body.surface_area = body_surface_area
-  whole_body.skin_temp = air_temp
+  whole_body.skin_temp = body_starting_skin_temp
   whole_body.skin_wetness = body_starting_wetness
   whole_body.skin_thickness = 5
   whole_body.core_temp = body_starting_core_temp
@@ -84,7 +148,7 @@ func _ready():
   head = BodyPart.new()
   head.mass = 0.08 * body_total_mass
   head.surface_area = 0.10 * body_surface_area
-  head.skin_temp = air_temp
+  head.skin_temp = body_starting_skin_temp
   head.skin_wetness = body_starting_wetness
   head.skin_thickness = 2
   head.core_temp = body_starting_core_temp
@@ -92,7 +156,7 @@ func _ready():
   torso = BodyPart.new()
   torso.mass = 0.50 * body_total_mass
   torso.surface_area = 0.36 * body_surface_area
-  torso.skin_temp = air_temp
+  torso.skin_temp = body_starting_skin_temp
   torso.skin_wetness = body_starting_wetness
   torso.skin_thickness = 4
   torso.core_temp = body_starting_core_temp
@@ -100,7 +164,7 @@ func _ready():
   arms = BodyPart.new()
   arms.mass = 0.15 * body_total_mass
   arms.surface_area = 0.25 * body_surface_area
-  arms.skin_temp = air_temp
+  arms.skin_temp = body_starting_skin_temp
   arms.skin_wetness = body_starting_wetness
   arms.skin_thickness = 2.5
   arms.core_temp = body_starting_core_temp
@@ -108,7 +172,7 @@ func _ready():
   legs = BodyPart.new()
   legs.mass = 0.24 * body_total_mass
   legs.surface_area = 0.21 * body_surface_area
-  legs.skin_temp = air_temp
+  legs.skin_temp = body_starting_skin_temp
   legs.skin_wetness = body_starting_wetness
   legs.skin_thickness = 3
   legs.core_temp = body_starting_core_temp
@@ -116,7 +180,7 @@ func _ready():
   feet = BodyPart.new()
   feet.mass = 0.03 * body_total_mass
   feet.surface_area = 0.08 * body_surface_area
-  feet.skin_temp = air_temp
+  feet.skin_temp = body_starting_skin_temp
   feet.skin_wetness = body_starting_wetness
   feet.skin_thickness = 4.5
   feet.core_temp = body_starting_core_temp
@@ -132,7 +196,7 @@ func water_pressure_from_temp(temp:float):
   return 7.50062 * 0.61078 * exp(17.27 * temp / (temp + 237.3))
 
 # 10,000 sq cm in 1 sqm
-const skin_saturation_weight = 0.01 * 10000 # g per sqm
+const skin_saturation_weight = 0.001 * 10000 # g per sqm
 
 func mass_from_wetness(surface_area:float, wetness:float):
   return surface_area * skin_saturation_weight * wetness
@@ -157,8 +221,9 @@ func update_body_part(part:BodyPart, delta):
   var minimal_skin_conductance = 5.28 # watts / sqm / C
   var blood_thermal_capacity = 1.163 # watt hours per liter per C
   var neutral_skin_blood_flow = 6.3 # l per square meters per hour
-  var adjusted_skin_blood_flow = neutral_skin_blood_flow # TODO: Adjust for vasoconstriction
-  var blood_based_conductance = neutral_skin_blood_flow * blood_thermal_capacity / 3600
+  var adjusted_skin_blood_flow = neutral_skin_blood_flow * part.vasoconstriction
+  debug_data["skin_blood_flow"] = adjusted_skin_blood_flow
+  var blood_based_conductance = adjusted_skin_blood_flow * blood_thermal_capacity
   var total_skin_conductance = (minimal_skin_conductance + blood_based_conductance) * part.surface_area
   var skin_energy_exchange_rate = total_skin_conductance * (part.core_temp - part.skin_temp) # watts
   debug_data["skin_energy_exchange_rate"] = skin_energy_exchange_rate
@@ -169,14 +234,14 @@ func update_body_part(part:BodyPart, delta):
   # ========= Skin temp adjustment ==========
   #  = Sensible heat sources: Convection and Radiation =
   # Using sitting model of hc
-  var h_convection_constant = 11.6 + sqrt(wind_speed)
+  var h_convection_constant = 0 # 11.6 + sqrt(wind_speed)
   # Sitting value of hr
   var h_radiation_constant = 4.5
   var h_combined = h_convection_constant + h_radiation_constant
   # Major oversimplification. Assuming MRT == air temp
   var operative_temperature = air_temp
   # Not taking clothing into account
-  var sensible_heat_rate = h_combined * (operative_temperature - part.skin_temp)
+  var sensible_heat_rate = h_combined * (operative_temperature - part.skin_temp) * part.surface_area
   debug_data["sensible_heat_rate"] = sensible_heat_rate
   var sensible_heat_energy = sensible_heat_rate * delta
   var skin_delta_t_sensible = sensible_heat_energy / body_specific_heat / skin_mass
@@ -193,7 +258,7 @@ func update_body_part(part:BodyPart, delta):
   var mass_available = mass_from_wetness(part.surface_area, part.skin_wetness)
   var actual_mass_evaporated = min(mass_evaporated, mass_available)
   var evaporation_energy = actual_mass_evaporated * sweat_latent_heat
-  debug_data["evaporation_watts"] = evaporation_energy / delta
+  debug_data["evaporation_watts"] = -evaporation_energy / delta
   var skin_delta_t_evaporation = -evaporation_energy / body_specific_heat / skin_mass
 
   part.core_temp += core_delta_t_met
@@ -214,7 +279,11 @@ func update_body_part(part:BodyPart, delta):
   var signal_degrees = max(0, signal_temp - threshold_temp)
   var sweating_control_coefficient = 200 # g / sqm / hour / C
   var sweat_rate = sweating_control_coefficient * signal_degrees / 3600 * part.surface_area # g/s
-  debug_data["sweat_rate"] = sweat_rate
+  # Based on 0.5 g/min for the whole body for skin diffusion and respiration
+  var diffusion_respiration_rate = 0.5 * (part.surface_area / body_surface_area) / 60
+  sweat_rate += diffusion_respiration_rate
+
+  debug_data["sweat_rate"] = sweat_rate * 60.0 # recording g/min
   var sweat_amount = sweat_rate * delta
 
   part.skin_wetness += wetness_from_mass(part.surface_area, sweat_amount)
@@ -223,7 +292,18 @@ func update_body_part(part:BodyPart, delta):
     part.skin_wetness = 1.0
 
   # TODO: shivering
-  # TODO: vasoconstriction
+  # TODO: bring back convection
+
+  var cold_skin_signal = -(part.skin_temp - 34)
+  var warm_core_signal = part.core_temp - 36.8
+  cold_skin_signal = clampf(cold_skin_signal, 0.0, 1.0)
+  warm_core_signal = clampf(warm_core_signal, 0.0, 1.0)
+
+  part.vasoconstriction = (neutral_skin_blood_flow + 150.0*warm_core_signal) / (1.0 + 0.5*cold_skin_signal) / neutral_skin_blood_flow
+
+  debug_data["core_temp"] = part.core_temp
+  debug_data["skin_temp"] = part.skin_temp
+  debug_data["vasoconstriction"] = part.vasoconstriction
 
   return debug_data
 
@@ -232,6 +312,15 @@ func _process(delta):
   if tooltip_shown and not tooltip_bounding_rect.has_point(get_viewport().get_mouse_position()):
     hide_tooltip()
 
+  delta *= time_rate
+
+  body_average_core_temp = 0.0
+  body_average_core_temp += (head.core_temp * head.mass / body_total_mass)
+  body_average_core_temp += (torso.core_temp * torso.mass / body_total_mass)
+  body_average_core_temp += (arms.core_temp * arms.mass / body_total_mass)
+  body_average_core_temp += (legs.core_temp * legs.mass / body_total_mass)
+  body_average_core_temp += (feet.core_temp * feet.mass / body_total_mass)
+
   # Update all body parts
   debug_stats["head"] = update_body_part(head, delta)
   debug_stats["torso"] = update_body_part(torso, delta)
@@ -239,11 +328,6 @@ func _process(delta):
   debug_stats["legs"] = update_body_part(legs, delta)
   debug_stats["feet"] = update_body_part(feet, delta)
   var debug_data = debug_stats["head"]
-
-  $Stats/HeadMetabolicRateValue.text = "%f" % [debug_data["part_metabolic_rate"]]
-  $Stats/SensibleHeatRateValue.text = "%f" % [debug_data["sensible_heat_rate"]]
-  $Stats/SkinEnergyRateValue.text = "%f" % [debug_data["skin_energy_exchange_rate"]]
-  $Stats/MassTransferValue.text = "%f" % [debug_data["evaporation_watts"]]
 
   $Head/SkinTempValue.text = "%2.2f" % [head.skin_temp]
   $Head/CoreTempValue.text = "%2.2f" % [head.core_temp]
@@ -264,7 +348,7 @@ func _on_air_temp_slider_value_changed(value):
 
 func _on_wind_speed_slider_value_changed(value):
   wind_speed = value
-  $Stats/WindSpeedValue.text = "%2.0f km/h" % [wind_speed]
+  $Stats/WindSpeedValue.text = "%2.1f km/h" % [wind_speed]
 
 func _on_humidity_slider_value_changed(value):
   humidity = value/100.0
@@ -273,3 +357,6 @@ func _on_humidity_slider_value_changed(value):
 func _on_metabolic_rate_slider_value_changed(value):
   body_metabolic_rate = value
   $Stats/MetabolicRateValue.text = "%2.0f met" % [body_metabolic_rate]
+
+func _on_time_rate_slider_value_changed(value):
+  time_rate = value

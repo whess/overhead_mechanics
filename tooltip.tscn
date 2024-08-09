@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://7af1mdj2f8ye" path="res://tooltip_row.tscn" id="3_vqmww"]
 
 [node name="Tooltip" type="PanelContainer"]
+z_index = 2
 offset_right = 137.0
 offset_bottom = 52.0
 theme_override_styles/panel = ExtResource("1_b3eqo")
