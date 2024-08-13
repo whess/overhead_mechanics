@@ -14,12 +14,16 @@ class BodyPart:
   var surface_area:float # sq m
   var skin_thickness:float # mm, generally 1mm to 5mm averaged
 
+  func alpha():
+    return 0
+
 # Environment variables
 var air_temp:float = 22 # C
 var wind_speed:float = 0.1 # km/h
 var humidity:float = 0.2 # % relative
 
 var time_rate = 1.0
+var total_time_passed = 0
 
 # Body total variables
 var body_metabolic_rate = 1.0 # in mets: 58.2 watts/sq meter
@@ -106,6 +110,7 @@ func show_tooltip(part_name:String, bounding_rect:Rect2):
     contents.append(Tooltip.TooltipContents.new("Sweat Rate (g/min):", "%.2f" % [debug_stats[part_name]["sweat_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Skin blood flow (L/min):", "%.2f" % [debug_stats[part_name]["skin_blood_flow"]]))
     contents.append(Tooltip.TooltipContents.new("Vasoconstriction (%):", "%.0f" % [debug_stats[part_name]["vasoconstriction"]*100]))
+    contents.append(Tooltip.TooltipContents.new("Internal body rate (watts):", "%.2f" % [debug_stats[part_name]["body_blood_flow_rate"]]))
     tooltip_node.set_contents(contents)
 
 func hide_tooltip():
@@ -209,6 +214,17 @@ func update_body_part(part:BodyPart, delta):
   var skin_mass = body_specific_gravity * part.surface_area * (part.skin_thickness/1000.0)
   var core_mass = part.mass - skin_mass
 
+  # Core temp from blood movement around body
+  var blood_temp_delta = body_average_core_temp - part.core_temp
+  # TODO: This is my own random guess. This should be improved and/or researched.
+  # TODO: This should also take into account vasoconstriction in the limbs
+  # TODO: This should also make sure that energy is not created or destroyed
+  var internal_body_conductance = 10.0 # watts / C
+  var body_blood_flow_rate = internal_body_conductance * blood_temp_delta
+  debug_data["body_blood_flow_rate"] = body_blood_flow_rate
+  var body_blood_flow_energy = body_blood_flow_rate * delta
+  var body_blood_flow_delta_t = body_blood_flow_energy / body_specific_heat / core_mass
+
   # Metabolic heat generation proportional by body mass
   # Increase core temp by amount of metabolic heat generation
   # Metabolic rate is based on surface area, but we will distribute it based on weight
@@ -261,6 +277,7 @@ func update_body_part(part:BodyPart, delta):
   debug_data["evaporation_watts"] = -evaporation_energy / delta
   var skin_delta_t_evaporation = -evaporation_energy / body_specific_heat / skin_mass
 
+  part.core_temp += body_blood_flow_delta_t
   part.core_temp += core_delta_t_met
   part.core_temp += core_delta_t_skin_conductance
   part.skin_temp += skin_delta_t_skin_conductance
@@ -313,6 +330,7 @@ func _process(delta):
     hide_tooltip()
 
   delta *= time_rate
+  total_time_passed += delta
 
   body_average_core_temp = 0.0
   body_average_core_temp += (head.core_temp * head.mass / body_total_mass)
@@ -328,6 +346,9 @@ func _process(delta):
   debug_stats["legs"] = update_body_part(legs, delta)
   debug_stats["feet"] = update_body_part(feet, delta)
   var debug_data = debug_stats["head"]
+
+  $Stats/CoreTempValue.text = "%2.2f" % [body_average_core_temp]
+  $Stats/TimePassedValue.text = "%2.0fh %2.0fm %2.0fs" % [total_time_passed / 3600, fmod(total_time_passed, 3600)/60, fmod(total_time_passed,60)]
 
   $Head/SkinTempValue.text = "%2.2f" % [head.skin_temp]
   $Head/CoreTempValue.text = "%2.2f" % [head.core_temp]

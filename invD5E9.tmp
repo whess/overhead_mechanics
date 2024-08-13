@@ -356,20 +356,6 @@ offset_bottom = 23.0
 text = "37
 "
 
-[node name="TimePassedLabel" type="Label" parent="Stats"]
-offset_left = 120.0
-offset_top = 230.0
-offset_right = 221.0
-offset_bottom = 253.0
-text = "Time Passed:"
-
-[node name="TimePassedValue" type="Label" parent="Stats"]
-offset_left = 130.0
-offset_top = 250.0
-offset_right = 199.0
-offset_bottom = 273.0
-text = "0h 0m 0s"
-
 [node name="AirTempValue" type="Label" parent="Stats"]
 offset_left = 100.0
 offset_top = 20.0
@@ -484,9 +470,8 @@ offset_left = 40.0
 offset_top = 94.0
 offset_right = 131.0
 offset_bottom = 110.0
-min_value = 0.001
 max_value = 60.0
-value = 1.001
+value = 1.0
 
 [node name="TimeRateLabel" type="Label" parent="Controls"]
 offset_left = 1.0
