@@ -5,11 +5,13 @@ signal ChangedInventory(from:InventorySlot, to:InventorySlot)
 
 enum Type {
   FOOD,
-  ARMOR,
+  CLOTHING,
 }
 
 @export var item_name:String = "GenericItem"
 @export var item_type:Type = Type.FOOD
+
+@export var clo_factor = 0.0
 
 var drag_offset:Vector2 = Vector2(0,0)
 var undragged_position:Vector2
@@ -24,8 +26,11 @@ func GrabFocus():
   get_parent().move_child(self, -1)
 
 func DragCancelled():
-  print("Reverting to undragged position")
-  global_position = undragged_position
+  #print("Reverting to undragged position")
+  #global_position = undragged_position
+  var old_slot = current_slot
+  current_slot = null
+  ChangedInventory.emit(old_slot, current_slot)
 
 func DropInto(drop_area:DropArea):
   if drop_area == null \
@@ -35,8 +40,9 @@ func DropInto(drop_area:DropArea):
     return
 
   global_position = drop_area.global_position
-  ChangedInventory.emit(current_slot, drop_area.owner)
+  var old_slot = current_slot
   current_slot = drop_area.owner
+  ChangedInventory.emit(old_slot, current_slot)
 
 func UpdatePosition(new_position, relative_change, drag_origin):
   #global_position += relative_change # *0.5

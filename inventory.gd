@@ -32,6 +32,7 @@ var tooltip_bounding_rect:Rect2
 var tooltip_shown = false
 
 var debug_stats = {"head": {}, "torso": {}, "arms": {}, "legs": {}, "feet": {}}
+var parts_by_name:Dictionary
 
 func pick_color(value:float, color_dict:Dictionary):
   var has_above_value = false
@@ -87,15 +88,15 @@ func show_tooltip(part_name:String, bounding_rect:Rect2):
     tooltip_shown = true
     add_child(tooltip_node)
     var contents:Array[Tooltip.TooltipContents]
-    contents.append(Tooltip.TooltipContents.new("Core Temp (C):", "%.2f" % [debug_stats[part_name]["core_temp"]], get_core_temp_color(debug_stats[part_name]["core_temp"])))
-    contents.append(Tooltip.TooltipContents.new("Skin Temp (C):", "%.2f" % [debug_stats[part_name]["skin_temp"]], get_skin_temp_color(debug_stats[part_name]["skin_temp"])))
+    contents.append(Tooltip.TooltipContents.new("Core Temp (C):", "%.2f" % [parts_by_name[part_name].core_temp], get_core_temp_color(parts_by_name[part_name].core_temp)))
+    contents.append(Tooltip.TooltipContents.new("Skin Temp (C):", "%.2f" % [parts_by_name[part_name].skin_temp], get_skin_temp_color(parts_by_name[part_name].skin_temp)))
     contents.append(Tooltip.TooltipContents.new("Metabolic Rate (watts):", "%.2f" % [debug_stats[part_name]["part_metabolic_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Core-Skin Rate (watts):", "%.2f" % [debug_stats[part_name]["skin_energy_exchange_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Sensible Rate (watts):", "%.2f" % [debug_stats[part_name]["sensible_heat_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Evaporation Rate (watts):", "%.2f" % [debug_stats[part_name]["evaporation_watts"]]))
     contents.append(Tooltip.TooltipContents.new("Sweat Rate (g/min):", "%.2f" % [debug_stats[part_name]["sweat_rate"]]))
     contents.append(Tooltip.TooltipContents.new("Skin blood flow (L/min):", "%.2f" % [debug_stats[part_name]["skin_blood_flow"]]))
-    contents.append(Tooltip.TooltipContents.new("Vasoconstriction (%):", "%.0f" % [debug_stats[part_name]["vasoconstriction"]*100]))
+    contents.append(Tooltip.TooltipContents.new("Vasoconstriction (%):", "%.0f" % [parts_by_name[part_name].vasoconstriction*100]))
     contents.append(Tooltip.TooltipContents.new("Internal body rate (watts):", "%.2f" % [debug_stats[part_name]["body_blood_flow_rate"]]))
     tooltip_node.set_contents(contents)
 
@@ -106,6 +107,18 @@ func hide_tooltip():
 func connect_tooltip_function(control:Control, debug_index:String):
   control.mouse_entered.connect(show_tooltip.bind(debug_index, control.get_global_rect()))
 
+func equip_clothing(clothing:Item, body_part:BodyPart):
+  print("Equipping clo %.2f on %s" % [clothing.clo_factor, body_part.part_name])
+  body_part.equipped_clo = clothing.clo_factor
+
+func unequip_clothing(clothing:Item, body_part:BodyPart):
+  print("Unequipping clothing on %s, %.2f to 0" % [body_part.part_name, body_part.equipped_clo])
+  body_part.equipped_clo = 0
+
+func connect_inventory_slot(slot:InventorySlot, body_part:BodyPart):
+  slot.AcceptedItem.connect(equip_clothing.bind(body_part))
+  slot.RemovedItem.connect(unequip_clothing.bind(body_part))
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
   _on_air_temp_slider_value_changed(air_temp)
@@ -114,7 +127,6 @@ func _ready():
   _on_metabolic_rate_slider_value_changed(body_metabolic_rate)
 
   tooltip_node = tooltip_scene.instantiate()
-  tooltip_node.owner = self
   connect_tooltip_function($Head/Control, "head")
   connect_tooltip_function($Torso/Control, "torso")
   connect_tooltip_function($Arms/Control, "arms")
@@ -129,6 +141,7 @@ func _ready():
   var body_starting_skin_temp = 33.5
 
   whole_body = BodyPart.new()
+  whole_body.part_name = "Whole Body"
   whole_body.mass = body_total_mass
   whole_body.surface_area = body_surface_area
   whole_body.skin_temp = body_starting_skin_temp
@@ -137,6 +150,7 @@ func _ready():
   whole_body.core_temp = body_starting_core_temp
 
   head = BodyPart.new()
+  head.part_name = "Head"
   head.mass = 0.08 * body_total_mass
   head.surface_area = 0.10 * body_surface_area
   head.skin_temp = body_starting_skin_temp
@@ -145,6 +159,7 @@ func _ready():
   head.core_temp = body_starting_core_temp
 
   torso = BodyPart.new()
+  torso.part_name = "Torso"
   torso.mass = 0.50 * body_total_mass
   torso.surface_area = 0.36 * body_surface_area
   torso.skin_temp = body_starting_skin_temp
@@ -153,6 +168,7 @@ func _ready():
   torso.core_temp = body_starting_core_temp
 
   arms = BodyPart.new()
+  arms.part_name = "Arms"
   arms.mass = 0.15 * body_total_mass
   arms.surface_area = 0.25 * body_surface_area
   arms.skin_temp = body_starting_skin_temp
@@ -161,6 +177,7 @@ func _ready():
   arms.core_temp = body_starting_core_temp
 
   legs = BodyPart.new()
+  legs.part_name = "Legs"
   legs.mass = 0.24 * body_total_mass
   legs.surface_area = 0.21 * body_surface_area
   legs.skin_temp = body_starting_skin_temp
@@ -169,12 +186,21 @@ func _ready():
   legs.core_temp = body_starting_core_temp
 
   feet = BodyPart.new()
+  feet.part_name = "Feet"
   feet.mass = 0.03 * body_total_mass
   feet.surface_area = 0.08 * body_surface_area
   feet.skin_temp = body_starting_skin_temp
   feet.set_skin_wetness(body_starting_wetness)
   feet.skin_thickness = 4.5
   feet.core_temp = body_starting_core_temp
+
+  parts_by_name = {"head": head, "torso": torso, "arms": arms, "legs": legs, "feet": feet}
+
+  connect_inventory_slot($Head/InventorySlot, head)
+  connect_inventory_slot($Torso/InventorySlot, torso)
+  connect_inventory_slot($Arms/InventorySlot, arms)
+  connect_inventory_slot($Legs/InventorySlot, legs)
+  connect_inventory_slot($Feet/InventorySlot, feet)
 
 const body_specific_heat = 3500 # J/(kg*C)
 const body_vascular_conduction_rate_base = 1.0 # watts * m^-2 * delta degrees C
@@ -184,6 +210,10 @@ const watts_per_met = 58.2 # watts per square meter
 # C -> Torr
 func water_pressure_from_temp(temp:float):
   return 7.50062 * 0.61078 * exp(17.27 * temp / (temp + 237.3))
+
+func clo_to_efficiency_factor(clo:float, sensible_rate:float):
+  return 1 / (1 + 0.1545 * clo * sensible_rate)
+
 #
 ## 10,000 sq cm in 1 sqm
 #const skin_saturation_weight = 0.001 * 10000 # g per sqm
@@ -242,7 +272,7 @@ func update_body_part(part:BodyPart, delta):
   # Major oversimplification. Assuming MRT == air temp
   var operative_temperature = air_temp
   # Not taking clothing into account
-  var sensible_heat_rate = h_combined * (operative_temperature - part.skin_temp) * part.surface_area
+  var sensible_heat_rate = clo_to_efficiency_factor(part.equipped_clo, h_combined) * h_combined * (operative_temperature - part.skin_temp) * part.surface_area
   debug_data["sensible_heat_rate"] = sensible_heat_rate
   var sensible_heat_energy = sensible_heat_rate * delta
   var skin_delta_t_sensible = sensible_heat_energy / body_specific_heat / part.skin_mass()

@@ -2,11 +2,14 @@ extends Node2D
 class_name InventorySlot
 
 @export var held_item:Item = null
-@export var accepted_item_types:Array[Item.Type] = [Item.Type.FOOD, Item.Type.ARMOR]
+@export var accepted_item_types:Array[Item.Type] = [Item.Type.FOOD, Item.Type.CLOTHING]
 
 @export var normal_color:Color
 @export var reject_color:Color
 @export var accept_color:Color
+
+signal AcceptedItem(item:Item)
+signal RemovedItem(item:Item)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,22 +32,20 @@ func OnStopHover(draggable:Draggable, accepted:bool):
 
 func RecieveItem(draggable:Draggable):
   if not draggable.owner_class is Item:
-    print("InventorySlot recieved something not an Item")
     return
 
   var new_item:Item = draggable.owner_class
-  if new_item.current_slot != null:
-    var previous_slot:InventorySlot = new_item.current_slot
-    previous_slot.held_item = held_item
   held_item = new_item
+  held_item.ChangedInventory.connect(RemoveItem)
+  AcceptedItem.emit(held_item)
 
-
-    #held_item.ChangedInventory.connect(ItemRemoved)
-
-#func ItemRemoved(from:InventorySlot, to:InventorySlot):
-  #if to != self:
-    #held_item.ChangedInventory.disconnect(ItemRemoved)
-    #held_item = null
+func RemoveItem(from:InventorySlot, to:InventorySlot):
+  if to == self:
+    return
+  var old_item = held_item
+  held_item.ChangedInventory.disconnect(RemoveItem)
+  held_item = null
+  RemovedItem.emit(old_item)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

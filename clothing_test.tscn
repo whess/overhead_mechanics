@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://oawjqsma4wbr"]
+
+[ext_resource type="PackedScene" uid="uid://b0ryiwyw5j3tc" path="res://inventory.tscn" id="1_0gmel"]
+[ext_resource type="PackedScene" uid="uid://c1qfbgaylirwd" path="res://item.tscn" id="2_y230p"]
+
+[node name="ClothingTest" type="Node2D"]
+
+[node name="Inventory" parent="." instance=ExtResource("1_0gmel")]
+position = Vector2(10, 120)
+
+[node name="Item" parent="." instance=ExtResource("2_y230p")]
+position = Vector2(570, 260)
+item_type = 1
+clo_factor = 1.0

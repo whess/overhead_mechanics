@@ -1,0 +1,129 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7bvjvao2yqv4"]
+
+[ext_resource type="Script" path="res://reference_test.gd" id="1_mj8wi"]
+
+[node name="ReferenceTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mj8wi")
+
+[node name="Increment" type="Button" parent="."]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 490.0
+offset_right = 600.0
+offset_bottom = 580.0
+text = "+1"
+
+[node name="Decrement" type="Button" parent="."]
+layout_mode = 0
+offset_left = 610.0
+offset_top = 490.0
+offset_right = 710.0
+offset_bottom = 580.0
+text = "-1"
+
+[node name="ControlLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 33.0
+text = "Control: "
+
+[node name="ControlValue" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 10.0
+offset_right = 177.0
+offset_bottom = 33.0
+text = "uninit"
+
+[node name="Test1Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 77.0
+offset_bottom = 63.0
+text = "Test1:
+"
+
+[node name="Test1Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 40.0
+offset_right = 177.0
+offset_bottom = 63.0
+text = "uninit"
+
+[node name="Test2Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 70.0
+offset_right = 77.0
+offset_bottom = 93.0
+text = "Test2:
+"
+
+[node name="Test2Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 70.0
+offset_right = 177.0
+offset_bottom = 93.0
+text = "uninit"
+
+[node name="Test3Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 77.0
+offset_bottom = 123.0
+text = "Test3:"
+
+[node name="Test3Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 100.0
+offset_right = 177.0
+offset_bottom = 123.0
+text = "uninit"
+
+[node name="Test4Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 130.0
+offset_right = 77.0
+offset_bottom = 153.0
+text = "Test4:"
+
+[node name="Test4Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 130.0
+offset_right = 177.0
+offset_bottom = 153.0
+text = "uninit"
+
+[node name="Test5Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 160.0
+offset_right = 77.0
+offset_bottom = 183.0
+text = "Test5:"
+
+[node name="Test5Value" type="Label" parent="."]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 160.0
+offset_right = 177.0
+offset_bottom = 183.0
+text = "uninit"
+
+[connection signal="pressed" from="Increment" to="." method="_on_increment_pressed"]
+[connection signal="pressed" from="Decrement" to="." method="_on_decrement_pressed"]

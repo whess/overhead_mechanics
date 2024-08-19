@@ -7,7 +7,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t6lku"]
 shader = ExtResource("3_jvhqi")
-shader_parameter/Shift_Hue = 0.27
+shader_parameter/Shift_Hue = 0.315
 
 [node name="Item" type="Node2D"]
 script = ExtResource("1_evah0")
