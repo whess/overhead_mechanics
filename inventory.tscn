@@ -375,6 +375,20 @@ offset_right = 199.0
 offset_bottom = 273.0
 text = "0h 0m 0s"
 
+[node name="WeightLostLabel" type="Label" parent="Stats"]
+offset_left = 120.0
+offset_top = 270.0
+offset_right = 221.0
+offset_bottom = 293.0
+text = "Weight lost:"
+
+[node name="WeightLostValue" type="Label" parent="Stats"]
+offset_left = 130.0
+offset_top = 290.0
+offset_right = 199.0
+offset_bottom = 313.0
+text = "0g"
+
 [node name="AirTempValue" type="Label" parent="Stats"]
 offset_left = 100.0
 offset_top = 20.0

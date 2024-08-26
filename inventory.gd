@@ -10,6 +10,7 @@ var humidity:float = 0.2 # % relative
 
 var time_rate = 1.0
 var total_time_passed = 0
+var total_weight_lost = 0.0
 
 # Body total variables
 var body_metabolic_rate = 1.0 # in mets: 58.2 watts/sq meter
@@ -279,7 +280,6 @@ func update_body_part(part:BodyPart, delta):
 
   #  = Insensible heat loss: Evaporation =
   var sweat_vapor_pressure = water_pressure_from_temp(part.skin_temp)
-  # TODO: This might not be right for calculating air vapor pressure
   var air_vapor_pressure = water_pressure_from_temp(air_temp) * humidity
   var mass_transfer_constant = 23.2 * sqrt(wind_speed)
   var mass_transfer_rate = part.skin_wetness() * part.surface_area * mass_transfer_constant * (sweat_vapor_pressure - air_vapor_pressure) / 60.0
@@ -288,6 +288,7 @@ func update_body_part(part:BodyPart, delta):
   var mass_evaporated = adjusted_mass_trasnsfer_rate * delta
   var mass_available = part.sweat_mass
   var actual_mass_evaporated = min(mass_evaporated, mass_available)
+  debug_data["mass_evaporated"] = actual_mass_evaporated
   var evaporation_energy = actual_mass_evaporated * sweat_latent_heat
   debug_data["evaporation_watts"] = -evaporation_energy / delta
   var skin_delta_t_evaporation = -evaporation_energy / body_specific_heat / part.skin_mass()
@@ -327,14 +328,12 @@ func update_body_part(part:BodyPart, delta):
 
   var cold_skin_signal = -(part.skin_temp - 34)
   var warm_core_signal = part.core_temp - 36.8
-  cold_skin_signal = clampf(cold_skin_signal, 0.0, 1.0)
-  warm_core_signal = clampf(warm_core_signal, 0.0, 1.0)
+  #cold_skin_signal = clampf(cold_skin_signal, 0.0, 1.0)
+  #warm_core_signal = clampf(warm_core_signal, 0.0, 1.0)
+  cold_skin_signal = max(0.0, cold_skin_signal)
+  warm_core_signal = max(0.0, warm_core_signal)
 
   part.vasoconstriction = (neutral_skin_blood_flow + 150.0*warm_core_signal) / (1.0 + 0.5*cold_skin_signal) / neutral_skin_blood_flow
-
-  debug_data["core_temp"] = part.core_temp
-  debug_data["skin_temp"] = part.skin_temp
-  debug_data["vasoconstriction"] = part.vasoconstriction
 
   return debug_data
 
@@ -359,8 +358,11 @@ func _process(delta):
   debug_stats["arms"] = update_body_part(arms, delta)
   debug_stats["legs"] = update_body_part(legs, delta)
   debug_stats["feet"] = update_body_part(feet, delta)
-  var debug_data = debug_stats["head"]
 
+  for debug_values in debug_stats.values():
+    total_weight_lost += debug_values["mass_evaporated"]
+
+  $Stats/WeightLostValue.text = "%.1fg (%.0f%%)" % [total_weight_lost, total_weight_lost/1000.0/body_total_mass*100.0]
   $Stats/CoreTempValue.text = "%2.2f" % [body_average_core_temp]
   $Stats/TimePassedValue.text = "%2.0fh %2.0fm %2.0fs" % [total_time_passed / 3600, fmod(total_time_passed, 3600)/60, fmod(total_time_passed,60)]
 
