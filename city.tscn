@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://caxy2g6jscwp6"]
+
+[ext_resource type="Script" path="res://city.gd" id="1_6lsgs"]
+[ext_resource type="Shader" path="res://hue_shift.gdshader" id="1_w3dtv"]
+[ext_resource type="Texture2D" uid="uid://c3nqkyxoltfqv" path="res://citydot50.png" id="2_rg2g0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bra0o"]
+shader = ExtResource("1_w3dtv")
+shader_parameter/Shift_Hue = null
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bdcop"]
+radius = 24.0
+
+[node name="City" type="Node2D"]
+script = ExtResource("1_6lsgs")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_bra0o")
+texture = ExtResource("2_rg2g0")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_bdcop")

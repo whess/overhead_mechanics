@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctua4yu0v2jr"]
+
+[ext_resource type="PackedScene" uid="uid://caxy2g6jscwp6" path="res://city.tscn" id="1_nsal7"]
+
+[node name="Map" type="Node2D"]
+
+[node name="City" parent="." instance=ExtResource("1_nsal7")]
+position = Vector2(70, 80)
+
+[node name="City2" parent="." instance=ExtResource("1_nsal7")]
+position = Vector2(320, 80)
