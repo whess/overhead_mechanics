@@ -1,0 +1,125 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctua4yu0v2jr"]
+
+[ext_resource type="Script" path="res://map.gd" id="1_cqvxn"]
+[ext_resource type="PackedScene" uid="uid://caxy2g6jscwp6" path="res://city.tscn" id="1_nsal7"]
+[ext_resource type="Script" path="res://city_path.gd" id="2_j0sda"]
+
+[node name="Map" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_cqvxn")
+
+[node name="City" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(70, 60)
+
+[node name="City2" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(320, 60)
+
+[node name="City4" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(400, 280)
+
+[node name="City5" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(220, 400)
+
+[node name="City6" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(260, 560)
+
+[node name="City7" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(340, 700)
+
+[node name="City8" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(500, 820)
+
+[node name="City9" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(680, 740)
+
+[node name="City10" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(660, 900)
+
+[node name="City11" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(800, 820)
+
+[node name="City3" parent="." instance=ExtResource("1_nsal7")]
+z_index = 1
+position = Vector2(190, 210)
+
+[node name="Path1" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(70, 60, 100, 150, 190, 210)
+script = ExtResource("2_j0sda")
+start = NodePath("../City")
+end = NodePath("../City3")
+
+[node name="Path2" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(190, 210, 240, 100, 320, 60)
+script = ExtResource("2_j0sda")
+start = NodePath("../City3")
+end = NodePath("../City2")
+
+[node name="Path3" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(190, 210, 220, 400)
+script = ExtResource("2_j0sda")
+start = NodePath("../City3")
+end = NodePath("../City5")
+
+[node name="Path4" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(260, 560, 220, 400)
+script = ExtResource("2_j0sda")
+start = NodePath("../City6")
+end = NodePath("../City5")
+
+[node name="Path5" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(260, 560, 340, 700)
+script = ExtResource("2_j0sda")
+start = NodePath("../City6")
+end = NodePath("../City7")
+
+[node name="Path6" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(500, 820, 400, 760, 340, 700)
+script = ExtResource("2_j0sda")
+start = NodePath("../City8")
+end = NodePath("../City7")
+
+[node name="Path7" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(500, 820, 580, 740, 680, 740)
+script = ExtResource("2_j0sda")
+start = NodePath("../City8")
+end = NodePath("../City9")
+
+[node name="Path8" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(800, 820, 680, 740)
+script = ExtResource("2_j0sda")
+start = NodePath("../City11")
+end = NodePath("../City9")
+
+[node name="Path9" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(800, 820, 660, 900)
+script = ExtResource("2_j0sda")
+start = NodePath("../City11")
+end = NodePath("../City10")
+
+[node name="Path10" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(500, 820, 560, 880, 660, 900)
+script = ExtResource("2_j0sda")
+start = NodePath("../City8")
+end = NodePath("../City10")
+
+[node name="Path11" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(190, 210, 280, 300, 400, 280)
+script = ExtResource("2_j0sda")
+start = NodePath("../City3")
+end = NodePath("../City4")
+
+[node name="Path12" type="Line2D" parent="." node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(320, 60, 380, 160, 400, 280)
+script = ExtResource("2_j0sda")
+start = NodePath("../City2")
+end = NodePath("../City4")
