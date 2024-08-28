@@ -46,12 +46,12 @@ func _reset_city_color(city_index:int):
 func _on_city_hover(city_index:int):
   city_list[city_index].color = hover_color
   var tt_contents:Array[Tooltip.TooltipContents] = [Tooltip.TooltipContents.new(city_list[city_index].name, "")]
-  $Tooltip.set_contents(tt_contents)
-  $Tooltip.visible = true
+  $Control/Tooltip.set_contents(tt_contents)
+  $Control/Tooltip.visible = true
 
 func _on_city_stop_hover(city_index:int):
   _reset_city_color(city_index)
-  $Tooltip.visible = false
+  $Control/Tooltip.visible = false
 
 func _on_city_click(city_index:int):
   if _is_adjacent(city_index, active_city):

@@ -136,8 +136,10 @@ script = ExtResource("2_j0sda")
 start = NodePath("../City2")
 end = NodePath("../City4")
 
-[node name="Tooltip" parent="." instance=ExtResource("4_0pyks")]
-visible = false
-
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(180, 190)
+
+[node name="Control" type="CanvasLayer" parent="."]
+
+[node name="Tooltip" parent="Control" instance=ExtResource("4_0pyks")]
+visible = false
