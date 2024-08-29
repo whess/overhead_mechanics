@@ -1,145 +1,272 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctua4yu0v2jr"]
+[gd_scene load_steps=7 format=3 uid="uid://ctua4yu0v2jr"]
 
 [ext_resource type="Script" path="res://map.gd" id="1_cqvxn"]
 [ext_resource type="PackedScene" uid="uid://caxy2g6jscwp6" path="res://city.tscn" id="1_nsal7"]
 [ext_resource type="Script" path="res://city_path.gd" id="2_j0sda"]
 [ext_resource type="PackedScene" uid="uid://c0jsts5383uxe" path="res://tooltip.tscn" id="4_0pyks"]
+[ext_resource type="FontFile" uid="uid://d0x5g5erme4un" path="res://Macondo-Regular.ttf" id="5_hlgkg"]
+
+[sub_resource type="Theme" id="Theme_wtxxr"]
+default_font = ExtResource("5_hlgkg")
+default_font_size = 24
 
 [node name="Map" type="Node2D"]
 script = ExtResource("1_cqvxn")
 
 [node name="Contents" type="Node2D" parent="."]
 
-[node name="City" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Toulene" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(70, 60)
+apples = 2
+apple_price = 200
 
-[node name="City2" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Jafar" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(320, 60)
 known = false
 
-[node name="City4" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Yims" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(400, 280)
 known = false
 
-[node name="City5" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Garcy" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(220, 400)
 known = false
+apples = 7
+apple_price = 200
 
-[node name="City6" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Hours" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(260, 560)
 known = false
+apples = 1
+apple_price = 20
 
-[node name="City7" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Rote" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(340, 700)
 known = false
+apples = 3
 
-[node name="City8" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Mincing" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(500, 820)
 known = false
+apples = 6
+apple_price = 105
 
-[node name="City9" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Tonne" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(680, 740)
 known = false
+apples = 8
 
-[node name="City10" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Sourly" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(660, 900)
 known = false
 
-[node name="City11" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Gams" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(800, 820)
 known = false
+apples = 25
+apple_price = 60
 
-[node name="City3" parent="Contents" instance=ExtResource("1_nsal7")]
+[node name="Withers" parent="Contents" instance=ExtResource("1_nsal7")]
 z_index = 1
 position = Vector2(190, 210)
 known = false
+apples = 1
+apple_price = 300
 
 [node name="Path1" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(70, 60, 100, 150, 190, 210)
 script = ExtResource("2_j0sda")
-start = NodePath("../City")
-end = NodePath("../City3")
+start = NodePath("../Toulene")
+end = NodePath("../Withers")
 
 [node name="Path2" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(190, 210, 240, 100, 320, 60)
 script = ExtResource("2_j0sda")
-start = NodePath("../City3")
-end = NodePath("../City2")
+start = NodePath("../Withers")
+end = NodePath("../Jafar")
 
 [node name="Path3" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(190, 210, 220, 400)
 script = ExtResource("2_j0sda")
-start = NodePath("../City3")
-end = NodePath("../City5")
+start = NodePath("../Withers")
+end = NodePath("../Garcy")
 
 [node name="Path4" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(260, 560, 220, 400)
 script = ExtResource("2_j0sda")
-start = NodePath("../City6")
-end = NodePath("../City5")
+start = NodePath("../Hours")
+end = NodePath("../Garcy")
 
 [node name="Path5" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(260, 560, 340, 700)
 script = ExtResource("2_j0sda")
-start = NodePath("../City6")
-end = NodePath("../City7")
+start = NodePath("../Hours")
+end = NodePath("../Rote")
 
 [node name="Path6" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(500, 820, 400, 760, 340, 700)
 script = ExtResource("2_j0sda")
-start = NodePath("../City8")
-end = NodePath("../City7")
+start = NodePath("../Mincing")
+end = NodePath("../Rote")
 
 [node name="Path7" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(500, 820, 580, 740, 680, 740)
 script = ExtResource("2_j0sda")
-start = NodePath("../City8")
-end = NodePath("../City9")
+start = NodePath("../Mincing")
+end = NodePath("../Tonne")
 
 [node name="Path8" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(800, 820, 680, 740)
 script = ExtResource("2_j0sda")
-start = NodePath("../City11")
-end = NodePath("../City9")
+start = NodePath("../Gams")
+end = NodePath("../Tonne")
 
 [node name="Path9" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(800, 820, 660, 900)
 script = ExtResource("2_j0sda")
-start = NodePath("../City11")
-end = NodePath("../City10")
+start = NodePath("../Gams")
+end = NodePath("../Sourly")
 
 [node name="Path10" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(500, 820, 560, 880, 660, 900)
 script = ExtResource("2_j0sda")
-start = NodePath("../City8")
-end = NodePath("../City10")
+start = NodePath("../Mincing")
+end = NodePath("../Sourly")
 
 [node name="Path11" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(190, 210, 280, 280, 400, 280)
 script = ExtResource("2_j0sda")
-start = NodePath("../City3")
-end = NodePath("../City4")
+start = NodePath("../Withers")
+end = NodePath("../Yims")
 
 [node name="Path12" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(320, 60, 380, 160, 400, 280)
 script = ExtResource("2_j0sda")
-start = NodePath("../City2")
-end = NodePath("../City4")
+start = NodePath("../Jafar")
+end = NodePath("../Yims")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(180, 190)
+position = Vector2(70, 60)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
 
 [node name="Control" type="CanvasLayer" parent="."]
 
 [node name="Tooltip" parent="Control" instance=ExtResource("4_0pyks")]
 visible = false
+
+[node name="ScreenText" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -210.0
+offset_top = -100.0
+offset_right = -170.0
+offset_bottom = -60.0
+theme = SubResource("Theme_wtxxr")
+
+[node name="VisitingLabel" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 110.0
+offset_right = 310.0
+offset_bottom = 140.0
+text = "Visiting: "
+
+[node name="VisitingValue" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 110.0
+offset_right = 454.0
+offset_bottom = 140.0
+text = "Cityname"
+
+[node name="MoneyLabel" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 560.0
+offset_right = 320.0
+offset_bottom = 590.0
+text = "Money:"
+
+[node name="MoneyValue" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 560.0
+offset_right = 484.0
+offset_bottom = 590.0
+text = "0"
+
+[node name="ApplesOwnedLabel" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 590.0
+offset_right = 379.0
+offset_bottom = 620.0
+text = "Apples Owned:"
+
+[node name="ApplesOwnedValue" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 590.0
+offset_right = 484.0
+offset_bottom = 620.0
+text = "0"
+
+[node name="ApplesLabel" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 140.0
+offset_right = 310.0
+offset_bottom = 170.0
+text = "Apples:"
+
+[node name="ApplesValue" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 140.0
+offset_right = 450.0
+offset_bottom = 170.0
+text = "0"
+
+[node name="ApplePriceLabel" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 170.0
+offset_right = 339.0
+offset_bottom = 200.0
+text = "Apple Price:"
+
+[node name="ApplePriceValue" type="Label" parent="Control/ScreenText"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 170.0
+offset_right = 479.0
+offset_bottom = 200.0
+text = "0"
+
+[node name="BuyButton" type="Button" parent="Control"]
+offset_left = 60.0
+offset_top = 540.0
+offset_right = 98.0
+offset_bottom = 571.0
+text = "Buy"
+
+[node name="SellButton" type="Button" parent="Control"]
+offset_left = 120.0
+offset_top = 540.0
+offset_right = 158.0
+offset_bottom = 571.0
+text = "Sell"
+
+[connection signal="pressed" from="Control/BuyButton" to="." method="_on_buy"]
+[connection signal="pressed" from="Control/SellButton" to="." method="_on_sell"]

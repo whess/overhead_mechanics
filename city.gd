@@ -14,10 +14,8 @@ class Product:
   var maximum_price:int
   var minimum_price:int
 
-
 @export var apples:int = 5
-@export var bananas:int = 5
-@export var peaches:int = 5
+@export var apple_price = 100
 
 var color = 0.0:
   set(value):

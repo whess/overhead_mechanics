@@ -16,6 +16,9 @@ var adjacency_graph = []
 
 var active_city = 0
 
+var player_money = 500
+var player_apples = 0
+
 const default_color = 0.0
 const hover_color = 0.14
 const adjacent_color = 0.02
@@ -67,6 +70,10 @@ func _set_active_city(city_index:int):
   _set_adjacent_city_color(city_index, adjacent_color)
   _set_adjacent_path_color(city_index, Color.NAVAJO_WHITE)
   active_city = city_index
+  $Camera2D.position_smoothing_enabled = true
+  $Camera2D.position = city_list[active_city].position
+
+  _refresh_labels()
 
   for adj_node in adjacency_graph[active_city]:
     city_list[adj_node.target_city].known = true
@@ -103,6 +110,7 @@ func _ready():
     city_list[city_index].Click.connect(_on_city_click.bind(city_index))
 
   _set_active_city(active_city)
+  _refresh_labels()
 
 const zoom_factor = 0.1 # %
 
@@ -111,8 +119,31 @@ func _process(delta):
   var mouse_camera_offset = get_viewport_transform().affine_inverse() * get_viewport().get_mouse_position() - $Camera2D.get_screen_center_position()
 
   if Input.is_action_just_pressed("zoom_in"):
+    $Camera2D.position_smoothing_enabled = false
     $Camera2D.zoom *= (1 + zoom_factor)
     $Camera2D.position += mouse_camera_offset * zoom_factor
   if Input.is_action_just_pressed("zoom_out"):
+    $Camera2D.position_smoothing_enabled = false
     $Camera2D.zoom /= (1 + zoom_factor)
     $Camera2D.position += mouse_camera_offset * zoom_factor
+
+func _refresh_labels():
+  $Control/ScreenText/ApplesOwnedValue.text = str(player_apples)
+  $Control/ScreenText/MoneyValue.text = str(player_money)
+  $Control/ScreenText/VisitingValue.text = city_list[active_city].name
+  $Control/ScreenText/ApplesValue.text = str(city_list[active_city].apples)
+  $Control/ScreenText/ApplePriceValue.text = str(city_list[active_city].apple_price)
+
+func _on_buy():
+  if player_money > city_list[active_city].apple_price and city_list[active_city].apples > 0:
+    city_list[active_city].apples -= 1
+    player_apples += 1
+    player_money -= city_list[active_city].apple_price
+    _refresh_labels()
+
+func _on_sell():
+  if player_apples > 0:
+    city_list[active_city].apples += 1
+    player_apples -= 1
+    player_money += city_list[active_city].apple_price
+    _refresh_labels()
