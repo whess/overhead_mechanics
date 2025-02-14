@@ -3,6 +3,8 @@ class_name Tooltip
 
 var tooltip_row_scene = preload("res://tooltip_row.tscn")
 
+var offset = Vector2(20,20)
+
 class TooltipContents:
   var label:String
   var value:String
@@ -41,10 +43,11 @@ func _process(delta):
   var viewport = get_viewport()
   var mouse_position = get_viewport_transform().affine_inverse() * get_viewport().get_mouse_position()
 
-  global_position = mouse_position
+  # offset prevents the cursor from obscuring the contents
+  global_position = mouse_position + offset
 
+  # Flip across mouse position if it would clip outside the window
   if mouse_position.x + size.x > viewport.size.x:
-    global_position.x -= size.x
+    global_position.x -= size.x + offset.x*2
   if mouse_position.y + size.y > viewport.size.y:
-    global_position.y -= size.y
-
+    global_position.y -= size.y + offset.y*2

@@ -1,5 +1,5 @@
 extends MapTarget
-class_name City
+class_name Intersection
 
 var color = 0.0:
   set(value):

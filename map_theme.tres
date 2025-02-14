@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bhhhs60p7jq6x"]
+
+[ext_resource type="FontFile" uid="uid://d0x5g5erme4un" path="res://Macondo-Regular.ttf" id="1_qfnxy"]
+
+[resource]
+default_font = ExtResource("1_qfnxy")
+default_font_size = 24
+Label/colors/font_color = Color(0.113049, 0.113049, 0.113049, 1)

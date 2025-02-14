@@ -1,0 +1,650 @@
+[gd_scene load_steps=12 format=3 uid="uid://d2edj1l2uptnp"]
+
+[ext_resource type="Script" path="res://map_ch.gd" id="1_cs6dv"]
+[ext_resource type="PackedScene" uid="uid://caxy2g6jscwp6" path="res://city.tscn" id="1_e264l"]
+[ext_resource type="PackedScene" uid="uid://c0jsts5383uxe" path="res://tooltip.tscn" id="1_kuxdy"]
+[ext_resource type="Script" path="res://city_path.gd" id="2_yvo8a"]
+[ext_resource type="Texture2D" uid="uid://bmntba18kfbxx" path="res://IMG_0116.PNG" id="3_lopd0"]
+[ext_resource type="PackedScene" uid="uid://chkwmqqikpklg" path="res://intersection.tscn" id="5_vdoi1"]
+[ext_resource type="Shader" path="res://hue_shift.gdshader" id="6_2beyh"]
+[ext_resource type="Theme" uid="uid://bhhhs60p7jq6x" path="res://map_theme.tres" id="6_jbdiv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7kmks"]
+shader = ExtResource("6_2beyh")
+shader_parameter/Shift_Hue = null
+
+[sub_resource type="Gradient" id="Gradient_us0vs"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0.733333, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hxdke"]
+gradient = SubResource("Gradient_us0vs")
+
+[node name="MapCH" type="Node2D"]
+script = ExtResource("1_cs6dv")
+
+[node name="BackgroundMap" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(1128, -113)
+texture = ExtResource("3_lopd0")
+metadata/_edit_lock_ = true
+
+[node name="Contents" type="Node2D" parent="."]
+
+[node name="Toulene" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(177, 260)
+scale = Vector2(0.41, 0.41)
+
+[node name="Frond" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(-309, 189)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Craston" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(-620, -243)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Tiden" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(469, -438)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="High Hold" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(-1368, 144)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Chitton" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(-357, 760)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Frine" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(-124, 1010)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Falmouth" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(448, 990)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Tennel" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1044, 1300)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Rine" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1345, 51)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Porte" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1888, -133)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Clouton" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1427, -425)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Rasp" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2220, -459)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Rythe" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2029, -1161)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Syne" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2500, -1528)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Cabbol" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(3152, -1027)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Axleton" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1861, 595)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Mettle" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2744, 83.0001)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Cerulean" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(3152, 11)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Crone" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2667, 888)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Timon" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(3265, 1098)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Scont" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(2105, 1724)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Jarthan" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(237, 661)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Titor" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(938, 109)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Jorn" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(1175, 585)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Kite" parent="Contents" instance=ExtResource("1_e264l")]
+z_index = 1
+position = Vector2(894, 813)
+scale = Vector2(0.41, 0.41)
+known = false
+
+[node name="Path1" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(177, 260, 162, 292, 161, 333, 156, 360, 158, 375, 169, 394, 171, 413, 163, 434, 150, 453, 237, 661)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Toulene")
+end = NodePath("../Jarthan")
+
+[node name="Path33" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(177, 260, 198, 232, 224, 201, 249, 158)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Toulene")
+end = NodePath("../Intersection1")
+type = 1
+
+[node name="Path34" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(311, 109, 938, 109)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Intersection2")
+end = NodePath("../Titor")
+
+[node name="Path39" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(311, 109, 249, 158)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Intersection2")
+end = NodePath("../Intersection1")
+
+[node name="Path35" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(311, 109, 280, 114, 265, 121)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Intersection2")
+end = NodePath("../Intersection3")
+
+[node name="Path36" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(265, 121, 256, 138, 249, 158)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Intersection3")
+end = NodePath("../Intersection1")
+
+[node name="Path37" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(265, 121, 237, 114)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Intersection3")
+end = NodePath("../Intersection4")
+type = 3
+
+[node name="Path38" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-309, 189, -89, 162, -55, 176, -42, 179, -27, 175, -11, 161, 18, 134, 63, 121, 96, 125, 149, 128, 171, 123, 207, 111, 237, 114)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frond")
+end = NodePath("../Intersection4")
+
+[node name="Path3" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1345, 51, 938, 109)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Rine")
+end = NodePath("../Titor")
+
+[node name="Path4" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1345, 51, 1546.38, -17.2397, 1888, -133)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Rine")
+end = NodePath("../Porte")
+
+[node name="Path5" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1427, -425, 1888, -133)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Clouton")
+end = NodePath("../Porte")
+
+[node name="Path6" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2220, -459, 1888, -133)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Rasp")
+end = NodePath("../Porte")
+
+[node name="Path9" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2744, 83.0001, 1888, -133)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Mettle")
+end = NodePath("../Porte")
+
+[node name="Path10" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2744, 83.0001, 3152, 11)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Mettle")
+end = NodePath("../Cerulean")
+
+[node name="Path11" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(3152, -1027, 3152, 11)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Cabbol")
+end = NodePath("../Cerulean")
+
+[node name="Path12" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(3265, 1098, 3152, 11)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Timon")
+end = NodePath("../Cerulean")
+
+[node name="Path13" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(3265, 1098, 2667, 888)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Timon")
+end = NodePath("../Crone")
+
+[node name="Path14" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2744, 83.0001, 2667, 888)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Mettle")
+end = NodePath("../Crone")
+
+[node name="Path15" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1044, 1300, 2667, 888)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Tennel")
+end = NodePath("../Crone")
+
+[node name="Path16" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1044, 1300, 448, 990)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Tennel")
+end = NodePath("../Falmouth")
+
+[node name="Path17" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(237, 661, 448, 990)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jarthan")
+end = NodePath("../Falmouth")
+
+[node name="Path25" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(237, 661, 894, 813)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jarthan")
+end = NodePath("../Kite")
+
+[node name="Path26" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1175, 585, 894, 813)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jorn")
+end = NodePath("../Kite")
+
+[node name="Path27" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1175, 585, 667, 458, 623.922, 460.625, 599, 455, 576, 447, 560, 448, 518, 445, 491, 435, 453, 423, 429, 409, 409, 388, 389, 378, 358, 365, 336, 360, 299, 354, 268, 348, 241, 333, 217, 314, 199, 294, 191, 276, 190, 252, 177, 260)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jorn")
+end = NodePath("../Toulene")
+
+[node name="Path28" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1175, 585, 1345, 51)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jorn")
+end = NodePath("../Rine")
+
+[node name="Path29" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1175, 585, 1861, 595)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jorn")
+end = NodePath("../Axleton")
+
+[node name="Path30" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2744, 83.0001, 1861, 595)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Mettle")
+end = NodePath("../Axleton")
+
+[node name="Path31" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(1345, 51, 1861, 595)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Rine")
+end = NodePath("../Axleton")
+
+[node name="Path18" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-124, 1010, 448, 990)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frine")
+end = NodePath("../Falmouth")
+
+[node name="Path19" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-124, 1010, 237, 661)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frine")
+end = NodePath("../Jarthan")
+
+[node name="Path20" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-124, 1010, -357, 760)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frine")
+end = NodePath("../Chitton")
+
+[node name="Path21" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(237, 661, -357, 760)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Jarthan")
+end = NodePath("../Chitton")
+
+[node name="Path22" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-309, 189, -357, 760)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frond")
+end = NodePath("../Chitton")
+
+[node name="Path23" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-309, 189, -620, -243)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Frond")
+end = NodePath("../Craston")
+
+[node name="Path24" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(-1368, 144, -620, -243)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../High Hold")
+end = NodePath("../Craston")
+
+[node name="Path7" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2220, -459, 2029, -1161)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Rasp")
+end = NodePath("../Rythe")
+
+[node name="Path8" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
+points = PackedVector2Array(2500, -1528, 2029, -1161)
+width = 4.79
+default_color = Color(1, 1, 1, 0.521569)
+script = ExtResource("2_yvo8a")
+start = NodePath("../Syne")
+end = NodePath("../Rythe")
+
+[node name="Intersection1" parent="Contents" instance=ExtResource("5_vdoi1")]
+position = Vector2(249, 158)
+known = false
+
+[node name="Intersection2" parent="Contents" instance=ExtResource("5_vdoi1")]
+position = Vector2(311, 109)
+known = false
+
+[node name="Intersection3" parent="Contents" instance=ExtResource("5_vdoi1")]
+position = Vector2(265, 121)
+known = false
+
+[node name="Intersection4" parent="Contents" instance=ExtResource("5_vdoi1")]
+position = Vector2(237, 114)
+known = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(53, 162)
+zoom = Vector2(2.39, 2.39)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Player" type="Sprite2D" parent="."]
+z_index = 2
+material = SubResource("ShaderMaterial_7kmks")
+position = Vector2(1.90735e-06, -0.5)
+scale = Vector2(0.046875, 13)
+texture = SubResource("GradientTexture1D_hxdke")
+
+[node name="Control" type="CanvasLayer" parent="."]
+
+[node name="Tooltip" parent="Control" instance=ExtResource("1_kuxdy")]
+visible = false
+
+[node name="TopLeft" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -210.0
+offset_top = -100.0
+offset_right = -170.0
+offset_bottom = -60.0
+theme = ExtResource("6_jbdiv")
+
+[node name="VisitingLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 110.0
+offset_right = 310.0
+offset_bottom = 140.0
+text = "Visiting: "
+
+[node name="VisitingValue" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 110.0
+offset_right = 454.0
+offset_bottom = 140.0
+text = "Cityname"
+
+[node name="DistanceLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 140.0
+offset_right = 310.0
+offset_bottom = 170.0
+text = "Distance:"
+
+[node name="DistanceValue" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 140.0
+offset_right = 450.0
+offset_bottom = 170.0
+text = "0"
+
+[node name="LastLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 170.0
+offset_right = 339.0
+offset_bottom = 200.0
+text = "Last path:"
+
+[node name="LastValue" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 170.0
+offset_right = 479.0
+offset_bottom = 200.0
+text = "0"
+
+[node name="LastTypeLabel" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 200.0
+offset_right = 339.0
+offset_bottom = 230.0
+text = "Last type:"
+
+[node name="LastTypeValue" type="Label" parent="Control/TopLeft"]
+layout_mode = 0
+offset_left = 360.0
+offset_top = 200.0
+offset_right = 479.0
+offset_bottom = 230.0
+text = "Lava"
+
+[node name="BottomLeft" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme = ExtResource("6_jbdiv")
+
+[node name="BuyButton" type="Button" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = -26.0
+offset_right = 76.0
+offset_bottom = 5.0
+text = "Buy"
+
+[node name="SellButton" type="Button" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 105.0
+offset_top = -25.0
+offset_right = 143.0
+offset_bottom = 6.0
+text = "Sell"
+
+[node name="ApplesOwnedLabel" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -63.0
+offset_right = 165.0
+offset_bottom = -33.0
+text = "Apples Owned:"
+
+[node name="ApplesOwnedValue" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = -63.0
+offset_right = 270.0
+offset_bottom = -33.0
+text = "0"
+
+[node name="MoneyValue" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 176.0
+offset_top = -93.0
+offset_right = 270.0
+offset_bottom = -63.0
+text = "0"
+
+[node name="MoneyLabel" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = -93.0
+offset_right = 106.0
+offset_bottom = -63.0
+text = "Money:"
