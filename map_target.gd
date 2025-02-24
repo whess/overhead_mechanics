@@ -33,3 +33,12 @@ func _process(_delta):
 func _input(event):
   if event.is_action_pressed("primary_action") and is_hovering:
     Click.emit()
+    
+func get_service_list():
+  var service_names = []
+  
+  for child in get_children():
+    if child is MapService:
+      service_names.append(child.display_name)
+    
+  return service_names

@@ -1,13 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2edj1l2uptnp"]
+[gd_scene load_steps=15 format=3 uid="uid://d2edj1l2uptnp"]
 
 [ext_resource type="Script" path="res://map_ch.gd" id="1_cs6dv"]
 [ext_resource type="PackedScene" uid="uid://caxy2g6jscwp6" path="res://city.tscn" id="1_e264l"]
 [ext_resource type="PackedScene" uid="uid://c0jsts5383uxe" path="res://tooltip.tscn" id="1_kuxdy"]
 [ext_resource type="Script" path="res://city_path.gd" id="2_yvo8a"]
 [ext_resource type="Texture2D" uid="uid://bmntba18kfbxx" path="res://IMG_0116.PNG" id="3_lopd0"]
+[ext_resource type="Script" path="res://map_service.gd" id="4_uvcvx"]
 [ext_resource type="PackedScene" uid="uid://chkwmqqikpklg" path="res://intersection.tscn" id="5_vdoi1"]
 [ext_resource type="Shader" path="res://hue_shift.gdshader" id="6_2beyh"]
 [ext_resource type="Theme" uid="uid://bhhhs60p7jq6x" path="res://map_theme.tres" id="6_jbdiv"]
+[ext_resource type="StyleBox" uid="uid://b0dgnfxobouk" path="res://box_style.tres" id="9_bdoy1"]
+[ext_resource type="Theme" uid="uid://djc2t8d5vc5v8" path="res://map_ui.tres" id="9_wra3i"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7kmks"]
 shader = ExtResource("6_2beyh")
@@ -35,6 +38,12 @@ metadata/_edit_lock_ = true
 z_index = 1
 position = Vector2(177, 260)
 scale = Vector2(0.41, 0.41)
+
+[node name="Tavern" type="Node" parent="Contents/Toulene"]
+script = ExtResource("4_uvcvx")
+
+[node name="Market" type="Node" parent="Contents/Toulene"]
+script = ExtResource("4_uvcvx")
 
 [node name="Frond" parent="Contents" instance=ExtResource("1_e264l")]
 z_index = 1
@@ -479,7 +488,6 @@ end = NodePath("../Rythe")
 [node name="Path8" type="Line2D" parent="Contents" node_paths=PackedStringArray("start", "end")]
 points = PackedVector2Array(2500, -1528, 2029, -1161)
 width = 4.79
-default_color = Color(1, 1, 1, 0.521569)
 script = ExtResource("2_yvo8a")
 start = NodePath("../Syne")
 end = NodePath("../Rythe")
@@ -517,6 +525,70 @@ texture = SubResource("GradientTexture1D_hxdke")
 
 [node name="Tooltip" parent="Control" instance=ExtResource("1_kuxdy")]
 visible = false
+
+[node name="TargetDisplay" type="PanelContainer" parent="Control"]
+custom_minimum_size = Vector2(300, 500)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -359.0
+offset_top = -255.0
+offset_right = -59.0
+offset_bottom = 245.0
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+theme = ExtResource("9_wra3i")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/TargetDisplay"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/TargetDisplay/MarginContainer"]
+layout_mode = 2
+
+[node name="PlaceName" type="Label" parent="Control/TargetDisplay/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 41
+text = "CityName"
+
+[node name="PlaceDescription" type="Label" parent="Control/TargetDisplay/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Information about the city"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/TargetDisplay/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/TargetDisplay/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="ServicesContainer" type="VBoxContainer" parent="Control/TargetDisplay/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Service 1" type="Button" parent="Control/TargetDisplay/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ServicesContainer"]
+layout_mode = 2
+text = "Service 1"
+
+[node name="Service 2" type="Button" parent="Control/TargetDisplay/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ServicesContainer"]
+layout_mode = 2
+text = "Service 2"
+
+[node name="Service 3" type="Button" parent="Control/TargetDisplay/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/ServicesContainer"]
+layout_mode = 2
+text = "Service 3"
 
 [node name="TopLeft" type="Control" parent="Control"]
 layout_mode = 3
@@ -601,6 +673,23 @@ offset_right = 40.0
 grow_vertical = 0
 theme = ExtResource("6_jbdiv")
 
+[node name="ServicesLabel" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 644.0
+offset_top = -150.0
+offset_right = 734.0
+offset_bottom = -120.0
+text = "Services:"
+
+[node name="ServicesValue" type="Label" parent="Control/BottomLeft"]
+layout_mode = 0
+offset_left = 746.0
+offset_top = -150.0
+offset_right = 836.0
+offset_bottom = -87.0
+text = "a
+b"
+
 [node name="BuyButton" type="Button" parent="Control/BottomLeft"]
 layout_mode = 0
 offset_left = 38.0
@@ -648,3 +737,41 @@ offset_top = -93.0
 offset_right = 106.0
 offset_bottom = -63.0
 text = "Money:"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+custom_minimum_size = Vector2(200, 300)
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 30.0
+offset_top = -25.0
+offset_right = 115.0
+offset_bottom = 25.0
+grow_vertical = 2
+theme = ExtResource("9_wra3i")
+theme_override_styles/panel = ExtResource("9_bdoy1")
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "Travel"
+horizontal_alignment = 1
+
+[node name="TravelOptionsContainer" type="VBoxContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="Control/PanelContainer/MarginContainer/VBoxContainer/TravelOptionsContainer"]
+layout_mode = 2
+text = "NorthWest
+"

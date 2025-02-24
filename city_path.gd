@@ -63,3 +63,14 @@ func position_for_t(t):
     cumulative_length += current_length
   return points[-1]
   
+func reset_color():
+  default_color = Color("ffffff88")
+  
+func highlight_adjacent():
+  default_color = Color("ffffffcc")
+  
+func highlight_hover():
+  default_color = Color("ff0000ff")
+
+func _ready():
+  reset_color()

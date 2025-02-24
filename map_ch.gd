@@ -2,12 +2,12 @@ extends Node2D
 class_name MapCH
 
 class AdjacencyNode:
-  var origin_target:int
-  var target_target:int
+  var origin:int
+  var target:int
   var path:int
-  func _init(origin:int, target:int, path_index:int):
-    origin_target = origin
-    target_target = target
+  func _init(p_origin:int, p_target:int, path_index:int):
+    origin = p_origin
+    target = p_target
     path = path_index
 
 var target_list:Array[MapTarget] = []
@@ -36,45 +36,100 @@ const active_color = 0.09
 
 func _is_adjacent(target1:int, target2:int):
   for adj_node in adjacency_graph[target1]:
-    if adj_node.target_target == target2:
+    if adj_node.target == target2:
       return true
   return false
   
 func _edge_between(target1:int, target2:int):
   for adj_node in adjacency_graph[target1]:
-    if adj_node.target_target == target2:
+    if adj_node.target == target2:
       return adj_node.path
   return -1
 
 func _set_adjacent_target_color(target_index:int, color:float):
   for adj_node in adjacency_graph[target_index]:
-    target_list[adj_node.target_target].color = color
+    target_list[adj_node.target].color = color
 
-func _set_adjacent_path_color(target_index:int, color:Color):
+func _highlight_adjacent_paths(target_index:int):
   for adj_node in adjacency_graph[target_index]:
-    path_list[adj_node.path].default_color = color
+    path_list[adj_node.path].highlight_adjacent()
+    
+func _reset_adjacent_paths(target_index:int):
+  for adj_node in adjacency_graph[target_index]:
+    path_list[adj_node.path].reset_color()
 
 func _reset_target_color(target_index:int):
-  if target_index == active_target:
-    target_list[target_index].color = active_color
-  elif _is_adjacent(active_target, target_index):
-    target_list[target_index].color = adjacent_color
-  else:
-    target_list[target_index].color = default_color
+  if target_list[target_index] is City:
+    if target_index == active_target:
+      target_list[target_index].color = active_color
+    elif _is_adjacent(active_target, target_index):
+      target_list[target_index].color = adjacent_color
+    else:
+      target_list[target_index].color = default_color
+      
+func _highlight_road_between(origin:int, target:int):
+  var path_index = _edge_between(origin, target)
+  if path_index != -1:
+    path_list[path_index].highlight_hover()
 
-func _on_target_hover(target_index:int):
-  target_list[target_index].color = hover_color
-  var tt_contents:Array[Tooltip.TooltipContents] = [Tooltip.TooltipContents.new(target_list[target_index].name, "")]
-  $Control/Tooltip.set_contents(tt_contents)
-  $Control/Tooltip.visible = true
+func _on_target_hover(target_index:int, direct_hover:bool):
+  if not is_traveling:
+    target_list[target_index].color = hover_color
+    _highlight_road_between(active_target, target_index)
+  if direct_hover and target_list[target_index] is City:
+    var tt_contents:Array[Tooltip.TooltipContents] = [Tooltip.TooltipContents.new(target_list[target_index].name, "")]
+    $Control/Tooltip.set_contents(tt_contents)
+    $Control/Tooltip.visible = true
 
 func _on_target_stop_hover(target_index:int):
   _reset_target_color(target_index)
   $Control/Tooltip.visible = false
+  # Undo the highlight from hovering
+  _highlight_adjacent_paths(active_target)
 
 func _on_target_click(target_index:int):
-  if _is_adjacent(target_index, active_target):
+  if not is_traveling and _is_adjacent(target_index, active_target):
     _travel_to(target_index)
+    
+func _cardinal_for_direction_vector(direction:Vector2, use_16:bool = false):
+  if direction.length() == 0:
+    return "Inside"
+    
+  var index = floori((direction.angle() + PI) / (TAU / 32))
+  
+  const cardinals16 = [
+    "West", "WNW", "NorthWest", "NNW", "North", "NNE", "NorthEast", "ENE",
+    "East", "ESE", "SouthEast", "SSE", "South", "SSW", "SouthWest", "WSW",
+  ]
+  const cardinals8 = [
+    "West", "NorthWest", "North", "NorthEast", "East", "SouthEast", "South", "SouthWest", 
+  ]
+  
+  if use_16:
+    return cardinals16[((index+1)%32)/2]
+  else:
+    return cardinals8[((index/2+1)%16)/2]
+    
+func _get_path_directions():
+  var directions = []
+  
+  for adj_node in adjacency_graph[active_target]:
+    var path = path_list[adj_node.path]
+    var path_amount = 0.5
+    var path_partial
+    if path.start == target_list[active_target]:
+      path_partial = path.position_for_t(path_amount)
+    else:
+      path_partial = path.position_for_t(1-path_amount)
+    var path_direction_vector = path_partial - target_list[active_target].position
+    
+    directions.append({
+      "direction_name": _cardinal_for_direction_vector(path_direction_vector),
+      "path_id": adj_node.path,
+      "target_id": adj_node.target,
+    })
+  
+  return directions
 
 func _travel_to(target_index:int):
   var speed_factor = 0.01
@@ -83,16 +138,19 @@ func _travel_to(target_index:int):
   travel_target = target_index
   active_path = _edge_between(active_target, target_index)
   total_travel_time = path_list[active_path].path_length() * speed_factor
+  $Control/TargetDisplay.hide()
+  # Undo the highlight from hovering.
+  _highlight_adjacent_paths(active_target)
 
 func _set_active_target(target_index:int):
   # Reset current target colors
   target_list[active_target].color = default_color
   _set_adjacent_target_color(active_target, default_color)
-  _set_adjacent_path_color(active_target, Color.WHITE)
+  _reset_adjacent_paths(active_target)
   # Set new target colors
   target_list[target_index].color = active_color
   _set_adjacent_target_color(target_index, adjacent_color)
-  _set_adjacent_path_color(target_index, Color.NAVAJO_WHITE)
+  _highlight_adjacent_paths(target_index)
   
   var edge_index = _edge_between(active_target, target_index)
   if edge_index != -1:
@@ -105,16 +163,33 @@ func _set_active_target(target_index:int):
   $Camera2D.position = target_list[active_target].position
   
   $Player.position = target_list[target_index].position
+  
+  #var service_list = target_list[active_target].get_service_list()
+  var direction_names = []
+  var directions = _get_path_directions()
+  for dir in directions:
+    direction_names.append(dir["direction_name"])
+  $Control/BottomLeft/ServicesValue.text = "\n".join(direction_names)
+  for child in %TravelOptionsContainer.get_children():
+    %TravelOptionsContainer.remove_child(child)
+    child.queue_free()
+  for dir in directions:
+    var button = Button.new()
+    button.text = dir["direction_name"]
+    button.mouse_entered.connect(_on_target_hover.bind(dir["target_id"], false))
+    button.mouse_exited.connect(_on_target_stop_hover.bind(dir["target_id"]))
+    button.pressed.connect(_on_target_click.bind(dir["target_id"]))
+    %TravelOptionsContainer.add_child(button)
 
   _refresh_labels()
 
   for adj_node in adjacency_graph[active_target]:
-    target_list[adj_node.target_target].known = true
+    target_list[adj_node.target].known = true
     path_list[adj_node.path].visible = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-  for child in $Contents.get_children():
+  for child in $Contents.get_children(true):
     if child is MapTarget:
       target_list.append(child)
     elif child is CityPath:
@@ -138,9 +213,8 @@ func _ready():
 
   # set up callbacks
   for target_index in range(target_list.size()):
-    if target_list[target_index] is City:
-      target_list[target_index].Hover.connect(_on_target_hover.bind(target_index))
-      target_list[target_index].StopHover.connect(_on_target_stop_hover.bind(target_index))
+    target_list[target_index].Hover.connect(_on_target_hover.bind(target_index, true))
+    target_list[target_index].StopHover.connect(_on_target_stop_hover.bind(target_index))
     target_list[target_index].Click.connect(_on_target_click.bind(target_index))
 
   _set_active_target(active_target)
@@ -181,11 +255,16 @@ func _refresh_labels():
   $Control/BottomLeft/MoneyValue.text = str(player_money)
   if target_list[active_target] is City:
     $Control/TopLeft/VisitingValue.text = target_list[active_target].name
+    $Control/TargetDisplay.show()
+    %PlaceName.text = target_list[active_target].display_name
+    %PlaceDescription.text = target_list[active_target].description
   else:
     $Control/TopLeft/VisitingValue.text = "On the road"
   $Control/TopLeft/DistanceValue.text = ("%.0f" % total_distance)
   $Control/TopLeft/LastValue.text = ("%.0f" % last_distance)
   $Control/TopLeft/LastTypeValue.text = last_path_type
+  
+  
 
 func _on_buy():
   if false: #player_money > target_list[active_target].apple_price and target_list[active_target].apples > 0:

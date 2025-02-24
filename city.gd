@@ -1,6 +1,9 @@
 extends MapTarget
 class_name City
 
+@export var display_name:String
+@export_multiline var description:String
+
 var color = 0.0:
   set(value):
     color = value
@@ -17,3 +20,8 @@ func _ready():
   # Otherwise, there is no way to set the unforms to be different values in each
   # City scene instance.
   $Sprite2D.material = $Sprite2D.material.duplicate()
+  
+  if display_name.is_empty():
+    display_name = name
+  if description.is_empty():
+    description = ("The city of %s." % display_name)

@@ -1,0 +1,8 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://djc2t8d5vc5v8"]
+
+[ext_resource type="FontFile" uid="uid://d0x5g5erme4un" path="res://Macondo-Regular.ttf" id="1_sf8k2"]
+[ext_resource type="StyleBox" uid="uid://b0dgnfxobouk" path="res://box_style.tres" id="2_hvmdr"]
+
+[resource]
+Label/fonts/font = ExtResource("1_sf8k2")
+PanelContainer/styles/panel = ExtResource("2_hvmdr")
