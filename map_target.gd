@@ -17,7 +17,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-  var mouse_pos = get_viewport_transform().affine_inverse() * get_viewport().get_mouse_position()
+  #var mouse_pos = get_viewport_transform().affine_inverse() * \
+      #(get_viewport().get_mouse_position())
+  var mouse_pos = get_global_mouse_position()
   $RayCast2D.global_position = mouse_pos
   $RayCast2D.force_raycast_update()
 

@@ -11,4 +11,5 @@
 /.cache
 # Godot
 /.godot
+/web
 
