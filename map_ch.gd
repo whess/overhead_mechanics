@@ -16,9 +16,6 @@ var adjacency_graph = []
 
 var active_target = 0
 
-var player_money = 500
-var player_apples = 0
-
 var total_distance = 0
 var last_distance = 0
 var last_path_type = "asdf"
@@ -169,7 +166,6 @@ func _set_active_target(target_index:int):
   var directions = _get_path_directions()
   for dir in directions:
     direction_names.append(dir["direction_name"])
-  $Control/BottomLeft/ServicesValue.text = "\n".join(direction_names)
   for child in %TravelOptionsContainer.get_children():
     %TravelOptionsContainer.remove_child(child)
     child.queue_free()
@@ -224,9 +220,19 @@ func _ready():
 
 const zoom_factor = 0.1 # %
 
+func _adjust_camera_for_player():
+  # how close the player can get to the edge of the screen before it follows
+  # in percentage of viewport size
+  const player_camera_margin = 0.15
+  var camera_rect = get_canvas_transform().affine_inverse().basis_xform(get_viewport_rect().size)
+  var max_camera_dist = camera_rect * (1-player_camera_margin*2)
+  var player_camera_dist = $Player.position - $Camera2D.position
+  var clamped_player_dist = player_camera_dist.clamp(-max_camera_dist/2, max_camera_dist/2)
+  var move_camera_amount = player_camera_dist - clamped_player_dist
+  $Camera2D.position += move_camera_amount
+  
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-  
   # travel animation
   if is_traveling:
     elapsed_travel_time += delta
@@ -237,9 +243,11 @@ func _process(delta):
     if path_list[active_path].start == target_list[travel_target]:
       t = 1-t
     $Player.position = path_list[active_path].position_for_t(t)
+    _adjust_camera_for_player()
+    
   
   # Camera zoom
-  var mouse_camera_offset = get_viewport_transform().affine_inverse() * get_viewport().get_mouse_position() - $Camera2D.get_screen_center_position()
+  var mouse_camera_offset = get_global_mouse_position() - $Camera2D.get_screen_center_position()
 
   if Input.is_action_just_pressed("zoom_in"):
     $Camera2D.position_smoothing_enabled = false
@@ -251,8 +259,6 @@ func _process(delta):
     $Camera2D.position += mouse_camera_offset * zoom_factor
 
 func _refresh_labels():
-  $Control/BottomLeft/ApplesOwnedValue.text = str(player_apples)
-  $Control/BottomLeft/MoneyValue.text = str(player_money)
   if target_list[active_target] is City:
     $Control/TopLeft/VisitingValue.text = target_list[active_target].name
     $Control/TargetDisplay.show()
@@ -263,19 +269,3 @@ func _refresh_labels():
   $Control/TopLeft/DistanceValue.text = ("%.0f" % total_distance)
   $Control/TopLeft/LastValue.text = ("%.0f" % last_distance)
   $Control/TopLeft/LastTypeValue.text = last_path_type
-  
-  
-
-func _on_buy():
-  if false: #player_money > target_list[active_target].apple_price and target_list[active_target].apples > 0:
-    target_list[active_target].apples -= 1
-    player_apples += 1
-    player_money -= target_list[active_target].apple_price
-    _refresh_labels()
-
-func _on_sell():
-  if false: #player_apples > 0:
-    target_list[active_target].apples += 1
-    player_apples -= 1
-    player_money += target_list[active_target].apple_price
-    _refresh_labels()
